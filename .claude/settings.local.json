@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(mkdir -p /c/WINDOWS/system32/kise-website/app/api/notices/\\\\[id\\\\])",
+      "Bash(mkdir -p /c/WINDOWS/system32/kise-website/app/api/press/\\\\[id\\\\])",
+      "Bash(mkdir -p /c/WINDOWS/system32/kise-website/app/api/archive/\\\\[id\\\\])",
+      "Bash(mkdir -p \"/c/WINDOWS/system32/kise-website/app/news/press/[id]\")",
+      "Bash(mkdir -p \"/c/WINDOWS/system32/kise-website/app/news/archive/[id]\")",
+      "Bash(npx tsc:*)",
+      "Bash(git config:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

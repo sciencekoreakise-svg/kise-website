@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+:root {
+  --kise-primary: #003087;
+  --kise-secondary: #0066cc;
+  --kise-accent: #ff6600;
+  --kise-light: #f0f4f9;
+  --kise-border: #d1dae8;
+  --background: #ffffff;
+  --foreground: #1a1a2e;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-kise-primary: var(--kise-primary);
+  --color-kise-secondary: var(--kise-secondary);
+  --color-kise-accent: var(--kise-accent);
+  --color-kise-light: var(--kise-light);
+  --color-kise-border: var(--kise-border);
+  --font-sans: var(--font-noto-sans-kr), "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+/* Utility bar */
+.utility-bar a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* Navigation dropdown */
+.nav-dropdown {
+  display: none;
+}
+.nav-item:hover .nav-dropdown {
+  display: block;
+}
+
+/* Hero slider */
+.slide-enter {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.slide-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--kise-secondary);
+  border-radius: 3px;
+}
