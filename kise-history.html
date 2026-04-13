@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>연혁 – 한국정보과학진흥협회</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: #f5f7fa; color: #1a1a2e; font-family: 'Noto Sans KR', sans-serif; }
+
+/* 타임라인 컨테이너 */
+.timeline-wrap { max-width: 900px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+
+/* 연도 그룹 */
+.year-group { display: flex; gap: 0; margin-bottom: 0; position: relative; }
+.year-group:last-child .events-col::after { display: none; }
+
+/* 연도 컬럼 */
+.year-col {
+  width: 110px;
+  flex-shrink: 0;
+  padding-top: 1.6rem;
+  position: relative;
+}
+.year-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 36px;
+  background: #003087;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 8px;
+  letter-spacing: 0.05em;
+  position: relative;
+  z-index: 2;
+  transition: background 0.2s, transform 0.2s;
+}
+.year-group:hover .year-badge {
+  background: #FF6600;
+  transform: scale(1.05);
+}
+
+/* 세로선 */
+.line-col {
+  width: 32px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1.6rem;
+}
+.line-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid #003087;
+  flex-shrink: 0;
+  margin-top: 11px;
+  z-index: 2;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+.year-group:hover .line-dot {
+  background: #FF6600;
+  border-color: #FF6600;
+  transform: scale(1.3);
+}
+.line-bar {
+  width: 2px;
+  flex: 1;
+  background: #d1dae8;
+  margin-top: 4px;
+  min-height: 20px;
+}
+
+/* 이벤트 컬럼 */
+.events-col {
+  flex: 1;
+  padding: 1.4rem 0 0.5rem 1.2rem;
+}
+
+/* 이벤트 아이템 */
+.event-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.3rem;
+  cursor: default;
+  transition: background 0.2s, transform 0.2s;
+  border-left: 3px solid transparent;
+}
+.event-item:hover {
+  background: white;
+  border-left-color: #003087;
+  transform: translateX(4px);
+  box-shadow: 0 2px 12px rgba(0,48,135,0.08);
+}
+.event-month {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #0066CC;
+  background: #eef3ff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  flex-shrink: 0;
+  min-width: 46px;
+  text-align: center;
+  transition: background 0.2s, color 0.2s;
+}
+.event-item:hover .event-month {
+  background: #003087;
+  color: white;
+}
+.event-text {
+  font-size: 0.9rem;
+  color: #374151;
+  line-height: 1.5;
+  font-weight: 400;
+  transition: color 0.2s;
+}
+.event-item:hover .event-text {
+  color: #003087;
+  font-weight: 500;
+}
+
+/* 특별 항목 강조 */
+.event-item.highlight .event-text { font-weight: 600; color: #003087; }
+.event-item.highlight .event-month { background: #003087; color: white; }
+.event-item.award .event-month { background: #FF6600; color: white; }
+.event-item.award .event-text { color: #c45200; }
+
+@media (max-width: 600px) {
+  .year-col { width: 72px; }
+  .year-badge { width: 64px; font-size: 0.8rem; }
+  .event-text { font-size: 0.82rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="timeline-wrap">
+
+  <div id="timeline"></div>
+</div>
+
+<script>
+const data = [
+  { year: 2003, events: [
+    { month:"05", text:"한국정보과학진흥협회 창립총회", type:"highlight" },
+    { month:"06", text:"제1회 안양시사이버축제 경진대회·스타크래프트 대회 부문 운영" },
+  ]},
+  { year: 2004, events: [
+    { month:"06", text:"제2회 안양시사이버축제 경진대회 부문 운영" },
+    { month:"06", text:"제1회 전국정보과학올림피아드 개최" },
+  ]},
+  { year: 2005, events: [
+    { month:"05", text:"제3회 안양시사이버축제 경진대회 부문 운영" },
+    { month:"06", text:"제2회 전국정보과학올림피아드 개최" },
+  ]},
+  { year: 2006, events: [
+    { month:"05", text:"제4회 안양시사이버축제 경진대회 부문 운영" },
+    { month:"05", text:"과학기술부 장관으로부터 법인설립허가 및 법인설립", type:"highlight" },
+    { month:"06", text:"제3회 전국정보과학올림피아드 개최" },
+    { month:"12", text:"청소년 기초과학캠프 운영" },
+  ]},
+  { year: 2007, events: [
+    { month:"05", text:"제5회 안양시사이버축제 경진대회 부문 운영" },
+    { month:"06", text:"제4회 전국정보과학올림피아드 개최" },
+    { month:"12", text:"청소년 기초과학캠프 운영" },
+  ]},
+  { year: 2008, events: [
+    { month:"05", text:"제6회 안양시사이버축제 경진대회 부문 운영" },
+    { month:"06", text:"제5회 전국정보과학올림피아드 개최" },
+    { month:"07", text:"제1회 전국청소년과학경시대회 개최" },
+    { month:"12", text:"청소년 기초과학캠프 운영" },
+  ]},
+  { year: 2009, events: [
+    { month:"05", text:"제7회 안양시사이버축제 경진대회 부문 운영" },
+    { month:"06", text:"제6회 전국정보과학올림피아드 개최" },
+    { month:"07", text:"제2회 전국청소년과학경시대회 개최" },
+    { month:"12", text:"청소년 기초과학캠프 운영" },
+  ]},
+  { year: 2010, events: [
+    { month:"05", text:"제8회 안양시사이버축제 경진대회 부문 운영" },
+    { month:"06", text:"제7회 전국정보과학올림피아드 개최" },
+    { month:"07", text:"제3회 전국청소년과학경시대회 개최" },
+    { month:"12", text:"청소년 기초과학캠프 운영" },
+  ]},
+  { year: 2011, events: [
+    { month:"05", text:"제9회 안양시사이버축제 경진대회 부문 운영" },
+    { month:"06", text:"제8회 전국정보과학올림피아드 개최" },
+    { month:"07", text:"제4회 전국청소년과학경시대회 개최" },
+    { month:"12", text:"청소년 기초과학캠프 운영" },
+  ]},
+  { year: 2012, events: [
+    { month:"03", text:"여성가족부 경력단절여성 IT 직업훈련 실시" },
+    { month:"05", text:"제10회 안양시사이버축제 경진대회 부문 운영" },
+    { month:"06", text:"제9회 전국정보과학올림피아드 개최" },
+    { month:"07", text:"제5회 전국청소년과학경시대회 개최" },
+    { month:"08", text:"수도권 서남부 대학 업무협약 체결" },
+    { month:"12", text:"생활과학능력평가원 설립 (CADTC, SGQ 검정)", type:"highlight" },
+  ]},
+  { year: 2013, events: [
+    { month:"01", text:"KISE CEO 포럼 운영 (회원사 148개사)" },
+    { month:"02", text:"고용노동부 청년취업아카데미 운영 (5개대학 8개과정)" },
+    { month:"03", text:"경기도 결혼이민자 정보화 교육 운영" },
+    { month:"06", text:"제10회 전국정보과학올림피아드 개최" },
+    { month:"07", text:"제6회 전국청소년과학경시대회 개최" },
+    { month:"12", text:"KISE 포럼 및 디지털디바이드 운동 (정보소외계층 디지털기기 보급)" },
+  ]},
+  { year: 2014, events: [
+    { month:"01", text:"전국 24개 대학 업무협약 체결", type:"highlight" },
+    { month:"02", text:"고용노동부 청년취업아카데미 운영 (6개대학 9개과정)" },
+    { month:"03", text:"경기도 결혼이민자 정보화 교육 운영" },
+    { month:"04", text:"여성가족부 경력단절여성 IT 직업훈련 실시" },
+    { month:"06", text:"제11회 전국정보과학올림피아드 개최" },
+    { month:"07", text:"제7회 전국청소년과학경시대회 개최" },
+    { month:"08", text:"안양시 SW 전문인력양성사업 교육 운영" },
+    { month:"12", text:"KISE 포럼 및 디지털디바이드 운동 (정보소외계층 디지털기기 보급)" },
+  ]},
+  { year: 2015, events: [
+    { month:"01", text:"빅데이터, 3D프린팅 자문단 구성 및 자격검정" },
+    { month:"02", text:"고용노동부 청년취업아카데미 운영 (6개대학 11개과정)" },
+    { month:"03", text:"경기도 결혼이민자 정보화 교육 운영" },
+    { month:"05", text:"한국클라우드산업협회 전문인력양성 업무협약" },
+    { month:"06", text:"제12회 전국정보과학올림피아드 개최" },
+    { month:"06", text:"제28회 정보문화의 달 국무총리 기관 표창", type:"award" },
+    { month:"07", text:"제8회 전국청소년과학경시대회 개최" },
+    { month:"08", text:"안양창조융합아카데미 교육 운영" },
+    { month:"12", text:"KISE 포럼 및 디지털디바이드 운동 (정보소외계층 디지털기기 보급)" },
+  ]},
+  { year: 2016, events: [
+    { month:"02", text:"고용노동부 청년취업아카데미 운영 (6개대학 10개과정)" },
+    { month:"06", text:"제13회 전국정보과학올림피아드 개최" },
+    { month:"07", text:"제9회 전국청소년과학경시대회 개최" },
+    { month:"12", text:"KISE 포럼 및 디지털디바이드 운동 (정보소외계층 디지털기기 보급)" },
+  ]},
+  { year: 2017, events: [
+    { month:"02", text:"고용노동부 청년취업아카데미 운영 (7개대학 9개과정)" },
+    { month:"03", text:"평생교육시설 KISE인재개발원 설립", type:"highlight" },
+    { month:"06", text:"제30회 정보문화의 달 대통령 표창 수상", type:"award" },
+    { month:"06", text:"제14회 ICT어워드코리아(ICT Award KOREA) 개최", type:"award" },
+    { month:"07", text:"제10회 전국청소년과학경시대회 개최" },
+    { month:"09", text:"과학기술정보통신부 이공계 전문기술 연수 운영" },
+    { month:"11", text:"중소기업기술보진흥원 스마트제조혁신단 클라우드기반 솔루션개발사업 DWG-365 구축" },
+    { month:"12", text:"ICT Convergence 정보기술융합대상 (정보소외계층 디지털기기 보급)" },
+  ]},
+  { year: 2018, events: [
+    { month:"02", text:"고용노동부 청년취업아카데미 운영 (7개대학 10개과정)" },
+    { month:"05", text:"VR 콘텐츠 전문인력 양성교육 운영" },
+    { month:"06", text:"제15회 ICT어워드코리아(ICT Award KOREA) 개최", type:"award" },
+    { month:"10", text:"제11회 Si-Tech Innovation Award 개최", type:"award" },
+    { month:"12", text:"ICT Convergence 정보기술융합대상 (정보소외계층 디지털기기 보급)" },
+  ]},
+  { year: 2019, events: [
+    { month:"02", text:"고용노동부 청년취업아카데미 운영 (5개대학 9개과정)" },
+    { month:"03", text:"과학기술정보통신부 이공계 전문기술 연수 운영기관 선정", type:"highlight" },
+    { month:"06", text:"제16회 ICT어워드코리아(ICT Award KOREA) 개최", type:"award" },
+    { month:"10", text:"제12회 Si-Tech Innovation Award 개최", type:"award" },
+    { month:"12", text:"ICT Convergence 정보기술융합대상 (정보소외계층 디지털기기 보급)" },
+  ]},
+  { year: 2020, events: [
+    { month:"02", text:"고용노동부 청년취업아카데미 운영 (6개대학 10개과정)" },
+    { month:"03", text:"고양 맞춤형 일자리학교 운영기관 선정" },
+    { month:"06", text:"2020 ICT어워드코리아(ICT Award KOREA) 개최", type:"award" },
+    { month:"10", text:"2020 Si-Tech Innovation Award 개최", type:"award" },
+    { month:"12", text:"ICT Convergence 정보기술융합대상 (정보소외계층 디지털기기 보급)" },
+  ]},
+  { year: 2021, events: [
+    { month:"02", text:"ISO국제인증 교육센터 및 인증원 설립", type:"highlight" },
+    { month:"05", text:"안양시 AI 기반 빅데이터, 머신비전 ICT융합 전문인력양성 운영" },
+    { month:"06", text:"2021 ICT어워드코리아(ICT Award KOREA) 개최", type:"award" },
+    { month:"08", text:"중소벤처기업부지원 비대면 화상회의실(중규모) 구축" },
+    { month:"10", text:"2021 Si-Tech Innovation Award 개최", type:"award" },
+    { month:"12", text:"ICT Convergence 정보기술융합대상 (정보소외계층 디지털기기 보급)" },
+  ]},
+  { year: 2022, events: [
+    { month:"05", text:"디지털뉴딜 전문인력양성 운영" },
+    { month:"06", text:"2022 ICT어워드코리아(ICT Award KOREA) 개최", type:"award" },
+    { month:"07", text:"경기도교육청 창의융합체험학습 운영기관 선정", type:"highlight" },
+    { month:"08", text:"산학협력 디지털콘텐츠 제작 사업 운영" },
+    { month:"09", text:"2022 Si-Tech Innovation Award 개최", type:"award" },
+    { month:"10", text:"소공인 스마트 마케팅 교육 사업 운영" },
+    { month:"12", text:"ICT Convergence 정보기술융합대상 (정보소외계층 디지털기기 보급)" },
+  ]},
+  { year: 2023, events: [
+    { month:"01", text:"교육부 디지털새싹 운영기관 선정 운영 (경기, 강원, 충북, 충남)", type:"highlight" },
+    { month:"06", text:"2023 ICT어워드코리아(ICT Award KOREA) 개최", type:"award" },
+    { month:"08", text:"안양시 인재육성재단 드림챌린저 운영" },
+    { month:"10", text:"2023 Si-Tech Innovation Award 개최", type:"award" },
+    { month:"10", text:"DSC모빌리티 창의과학 신기술 경진대회 운영" },
+    { month:"11", text:"금융산업공익재단 디지털소외계층 디지털교육 운영기관 선정", type:"highlight" },
+    { month:"12", text:"ICT Convergence 정보기술융합대상 (정보소외계층 디지털기기 보급)" },
+  ]},
+  { year: 2024, events: [
+    { month:"02", text:"DSC 수요기반 찾아가는 모빌리티 캠프 운영" },
+    { month:"03", text:"학교밖 청소년 센터 \"꿈드림\" 지원 업무협약 체결" },
+    { month:"04", text:"경기도평생교육진흥원 찾아가는 배움교실 플랫폼 운영" },
+    { month:"06", text:"4차년도 모빌리티 창의과학 신기술 경진대회 운영" },
+    { month:"06", text:"2024 ICT어워드코리아(ICT Award KOREA) 개최", type:"award" },
+    { month:"07", text:"평택시 고등학교 데이터 활용 아이디어톤 대회 운영" },
+    { month:"08", text:"안양시 인재육성재단 창의융합인재양성 AI 교육 운영" },
+    { month:"09", text:"2024 Si-Tech Innovation Award 개최", type:"award" },
+    { month:"12", text:"초록우산 어린이재단 디지털리터러시 교육 지원 운영" },
+    { month:"12", text:"ICT Convergence 정보기술융합대상 (정보소외계층 디지털기기 보급)" },
+  ]},
+  { year: 2025, events: [
+    { month:"01", text:"과학기술정보통신부 경기SW미래채움 참여기관 선정", type:"highlight" },
+    { month:"02", text:"금융산업공익재단 디지털소외계층 디지털교육 운영기관" },
+    { month:"05", text:"세이브더칠드런 꿈을키우는디지털세상 교육 운영" },
+    { month:"06", text:"2025 ICT어워드코리아(ICT Award KOREA) 개최", type:"award" },
+    { month:"07", text:"평택시 고등학교 데이터 활용 아이디어톤 대회 운영" },
+    { month:"08", text:"초록우산 어린이재단 AI&디지털리터러시 교육 지원 운영" },
+    { month:"09", text:"2025 Si-Tech Innovation Award 개최", type:"award" },
+    { month:"11", text:"RISE와 함께하는 모빌리티 로봇 교육캠프 운영" },
+  ]},
+  { year: 2026, events: [
+    { month:"01", text:"금융산업공익재단 디지털소외계층 디지털교육 운영기관" },
+    { month:"01", text:"과학기술정보통신부 경기SW미래채움 참여기관", type:"highlight" },
+    { month:"02", text:"2026년 화성 다가치 학교맞춤형 찾아가는 AI교실 운영기관" },
+  ]},
+];
+
+const container = document.getElementById('timeline');
+
+data.slice().reverse().forEach(({ year, events }) => {
+  const group = document.createElement('div');
+  group.className = 'year-group';
+
+  const yearCol = document.createElement('div');
+  yearCol.className = 'year-col';
+  yearCol.innerHTML = `<div class="year-badge">${year}</div>`;
+
+  const lineCol = document.createElement('div');
+  lineCol.className = 'line-col';
+  lineCol.innerHTML = `<div class="line-dot"></div><div class="line-bar"></div>`;
+
+  const eventsCol = document.createElement('div');
+  eventsCol.className = 'events-col';
+
+  events.forEach(({ month, text, type }) => {
+    const item = document.createElement('div');
+    item.className = 'event-item' + (type ? ` ${type}` : '');
+    item.innerHTML = `<span class="event-month">${month}월</span><span class="event-text">${text}</span>`;
+    eventsCol.appendChild(item);
+  });
+
+  group.appendChild(yearCol);
+  group.appendChild(lineCol);
+  group.appendChild(eventsCol);
+  container.appendChild(group);
+});
+</script>
+</body>
+</html>

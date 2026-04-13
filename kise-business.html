@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>주요사업 – 한국정보과학진흥협회</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&amp;family=Noto+Serif+KR:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: #f5f7fa; color: #1a1a2e; font-family: 'Noto Sans KR', sans-serif; }
+
+
+/* 사업 카드 */
+.projects-container { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+.project-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+  
+  box-shadow: 0 2px 16px rgba(0,48,135,0.07);
+  border: 1px solid #e8eef6;
+  transition: box-shadow 0.3s;
+}
+.project-card:hover { box-shadow: 0 8px 32px rgba(0,48,135,0.13); }
+
+/* 카드 하단: 이미지 갤러리 */
+.card-body {}
+.card-gallery { 
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  height: 280px;
+  gap: 3px;
+  background: #e2e8f0;
+}
+.card-gallery.single { grid-template-columns: 1fr; }
+.gallery-img {
+  overflow: hidden;
+  background: #dde4ef;
+}
+.gallery-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.project-card:hover .gallery-img img { transform: scale(1.04); }
+
+/* 카드 본문 */
+.card-body { padding: 2rem 2.5rem; }
+
+.category-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 1rem;
+  border-radius: 100px;
+  margin-bottom: 1rem;
+  background: #eef3ff;
+  color: #003087;
+  border: 1px solid #c7d7f5;
+}
+.card-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700;
+  color: #0a1628;
+  margin-bottom: 0.9rem;
+  line-height: 1.3;
+}
+.card-desc {
+  font-size: 0.96rem;
+  line-height: 1.9;
+  color: #4a5568;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+  max-width: 750px;
+}
+
+/* 정보 배지 */
+.info-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+.info-badge {
+  font-size: 0.75rem;
+  padding: 0.3rem 0.9rem;
+  border-radius: 100px;
+  background: #f8faff;
+  border: 1px solid #dde5f5;
+  color: #475569;
+}
+.info-badge strong { color: #003087; font-weight: 700; }
+
+/* 통계 그리드 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1px;
+  background: #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  border: 1px solid #e2e8f0;
+}
+.stat-cell {
+  background: #f8faff;
+  padding: 1.3rem 1rem;
+  text-align: center;
+}
+.stat-num {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #003087;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+.stat-label { font-size: 0.75rem; color: #64748b; font-weight: 600; margin-bottom: 0.25rem; }
+.stat-sub { font-size: 0.68rem; color: #94a3b8; }
+
+/* 특징 그리드 */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+.feature-card {
+  background: #f8faff;
+  border: 1px solid #e2eaf6;
+  border-radius: 10px;
+  padding: 1.2rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.feature-card:hover { transform: translateY(-2px); border-color: #003087; }
+.feature-icon { font-size: 1.4rem; margin-bottom: 0.5rem; }
+.feature-title { font-size: 0.88rem; font-weight: 700; color: #1e3a5f; margin-bottom: 0.4rem; }
+.feature-desc { font-size: 0.78rem; color: #64748b; line-height: 1.7; }
+
+/* 하이라이트 박스 */
+.highlight-box {
+  border-radius: 10px;
+  padding: 1.3rem 1.6rem;
+  margin-bottom: 1.2rem;
+  border-left: 4px solid #003087;
+  background: #f0f5ff;
+}
+.highlight-box h3 { font-size: 0.92rem; font-weight: 700; color: #003087; margin-bottom: 0.4rem; }
+.highlight-box p { font-size: 0.85rem; color: #475569; line-height: 1.8; }
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .card-gallery { grid-template-columns: 1fr; height: 220px; }
+  .card-gallery .gallery-img:not(:first-child) { display: none; }
+  .card-body { padding: 1.5rem; }
+  .filter-btn { padding: 0.8rem 1rem; font-size: 0.8rem; }
+}
+</style>
+</head>
+<body>
+<div class="projects-container">
+<!-- 1. ICT AWARD KOREA -->
+<div class="project-card" data-category="award">
+
+<div class="card-body">
+<div class="category-tag">🏆 어워드 / 2004 ~ 현재</div>
+<h2 class="card-title">ICT AWARD KOREA</h2>
+<p class="card-desc">2004년부터 현재까지, 대한민국 ICT 산업의 혁신과 디지털 기술 발전을 선도해온 국내 대표 ICT 분야 시상식입니다. 매년 연례 행사로 진행되며, 웹·모바일·AI·디지털 콘텐츠 등 다양한 분야에서 혁신을 이끈 기관과 프로젝트를 조명합니다.</p><div class="card-gallery">
+<div class="gallery-img"><img alt="ICT AWARD KOREA 시상식" src="/images/business/ict-award-1.jpg"/></div>
+<div class="gallery-img"><img alt="ICT 어워드" src="/images/business/ict-award-2.jpg"/></div>
+<div class="gallery-img"><img alt="ICT 어워드" src="/images/business/ict-award-3.jpg"/></div>
+</div>
+<div class="info-row">
+<span class="info-badge">최초 개최 <strong>2004년</strong></span>
+<span class="info-badge">개최 주기 <strong>매년 5월</strong></span>
+<span class="info-badge">주최 <strong>한국정보과학진흥협회 · 전자신문</strong></span>
+</div>
+<div class="features-grid">
+<div class="feature-card">
+<div class="feature-icon">🌐</div>
+<div class="feature-title">ICT 혁신 서비스 시상</div>
+<div class="feature-desc">웹 서비스 및 플랫폼, 모바일 서비스 및 앱, AI·데이터 기반 서비스, 디지털 콘텐츠 및 UX 서비스 부문</div>
+</div>
+<div class="feature-card">
+<div class="feature-icon">📣</div>
+<div class="feature-title">ICT 산업 성과 확산</div>
+<div class="feature-desc">우수 ICT 기업 및 프로젝트 발굴, 산업계·학계·공공기관 참여 확대, ICT 기술 트렌드 공유</div>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🤝</div>
+<div class="feature-title">산학연 협력 네트워크</div>
+<div class="feature-desc">ICT 기업 및 스타트업 참여, 대학 및 연구기관 협력, 디지털 산업 생태계 확산</div>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🎓</div>
+<div class="feature-title">창의와 코딩 학생부</div>
+<div class="feature-desc">초중고등학생을 대상으로 알고리즘 프로그래밍 능력 평가</div>
+</div>
+</div>
+<div class="highlight-box">
+<h3>행사 의의</h3>
+<p>단순한 시상을 넘어 ICT 산업의 혁신 사례를 발굴하고 디지털 기술 발전과 정보문화 진흥에 기여하는 국내 대표 ICT 시상 행사. 20여 년간 이어온 신뢰와 전통.</p>
+</div>
+</div>
+</div>
+<!-- 2. 과학기술혁신대상 -->
+<div class="project-card" data-category="award">
+
+<div class="card-body">
+<div class="category-tag">🔬 어워드 / 2005 ~ 현재</div>
+<h2 class="card-title">과학기술혁신대상<br/><small style="font-size:0.65em;font-weight:400;color:#64748b;">Si-Tech Innovation Award</small></h2>
+<p class="card-desc">대한민국 과학기술 혁신 성과를 발굴하고 미래 인재와 혁신기업을 지원하는 대표적인 과학기술 어워드 행사. 2005년부터 매년 7월 개최되며, AI·스마트팩토리·창의과학 등 3개 핵심 분야를 아우릅니다.</p><div class="card-gallery">
+<div class="gallery-img"><img alt="과학기술혁신대상" src="/images/business/sitech-1.jpg"/></div>
+<div class="gallery-img"><img alt="혁신대상" src="/images/business/sitech-2.jpg"/></div>
+<div class="gallery-img"><img alt="혁신대상" src="/images/business/sitech-3.jpg"/></div>
+</div>
+<div class="info-row">
+<span class="info-badge">개최 <strong>매년 7월</strong></span>
+<span class="info-badge">참가 영역 <strong>학생부 · 기업부</strong></span>
+<span class="info-badge">협력 <strong>성균관대학교 · 전자신문</strong></span>
+</div>
+<div class="stats-grid">
+<div class="stat-cell"><div class="stat-num">2</div><div class="stat-label">참가 영역</div><div class="stat-sub">학생부 · 기업부</div></div>
+<div class="stat-cell"><div class="stat-num">3</div><div class="stat-label">핵심 분야</div><div class="stat-sub">AI·스마트팩토리·창의과학</div></div>
+<div class="stat-cell"><div class="stat-num">6</div><div class="stat-label">공모 부문</div><div class="stat-sub">세분화된 성과 발굴</div></div>
+</div>
+<div class="features-grid">
+<div class="feature-card">
+<div class="feature-icon">🤖</div>
+<div class="feature-title">AI 기술혁신 분야</div>
+<div class="feature-desc">초거대·경량 AI, 클라우드, 반도체, 네트워크 등 핵심 AI 기술과 스마트 제조·디지털 헬스케어 성과 발굴</div>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🏭</div>
+<div class="feature-title">스마트 팩토리 &amp; AI 머신비전</div>
+<div class="feature-desc">AI 스마트 팩토리 머신비전 하드웨어·소프트웨어 부문, 제조 현장 효율성 극대화 기술 평가</div>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🎯</div>
+<div class="feature-title">AI 창의과학 학생부</div>
+<div class="feature-desc">Datathon Challenge · Ideathon Challenge — 고등학생·대학생 대상 AI 아이디어 기획부터 해결 방안 설계까지</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 3. SW미래채움 -->
+<div class="project-card" data-category="edu">
+
+<div class="card-body">
+<div class="category-tag">💻 교육사업 / 2025 ~ 현재</div>
+<h2 class="card-title">SW미래채움</h2>
+<p class="card-desc">과학기술정보통신부와 지방자치단체가 공동으로 추진하는 지역 기반 SW·AI 교육 사업. 초·중·고 학생을 대상으로 코딩, Python, AI 교육 및 로봇·피지컬 컴퓨팅 프로젝트 기반 학습을 운영합니다.</p><div class="card-gallery">
+<div class="gallery-img"><img alt="SW미래채움" src="/images/business/sw-future-1.jpg"/></div>
+<div class="gallery-img"><img alt="SW미래채움 활동" src="/images/business/sw-future-2.jpg"/></div>
+<div class="gallery-img"><img alt="SW미래채움 활동" src="/images/business/sw-future-3.jpg"/></div>
+</div>
+<div class="stats-grid">
+<div class="stat-cell"><div class="stat-num">207</div><div class="stat-label">캠프 운영</div><div class="stat-sub">SW·AI 교육 캠프</div></div>
+<div class="stat-cell"><div class="stat-num">2,852</div><div class="stat-label">학생 참여</div><div class="stat-sub">초·중·고 학생</div></div>
+<div class="stat-cell"><div class="stat-num">2,731</div><div class="stat-label">교육 이수</div><div class="stat-sub">전 과정 이수 완료</div></div>
+<div class="stat-cell"><div class="stat-num">1,800+</div><div class="stat-label">AI 페스티벌</div><div class="stat-sub">학생·학부모 참여</div></div>
+</div>
+<div class="features-grid">
+<div class="feature-card"><div class="feature-icon">📚</div><div class="feature-title">SW·AI 교육 프로그램</div><div class="feature-desc">코딩, Python, AI 교육 및 로봇·피지컬 컴퓨팅 프로젝트 기반 학습 운영</div></div>
+<div class="feature-card"><div class="feature-icon">🏕</div><div class="feature-title">캠프 및 체험</div><div class="feature-desc">방학 집중 캠프, AI 로봇·스마트시티 체험, 데이터 분석 및 알고리즘 프로그램 운영</div></div>
+<div class="feature-card"><div class="feature-icon">🏆</div><div class="feature-title">페스티벌 및 경진대회</div><div class="feature-desc">SW 발명 경진대회, 데이터 아이디어톤, 학생 작품 전시 및 발표 행사 개최</div></div>
+<div class="feature-card"><div class="feature-icon">🌱</div><div class="feature-title">SW 교육 생태계 구축</div><div class="feature-desc">지역 강사 양성, 교육기관·대학 협력 운영, SW 교육 거점센터 구축 및 확산</div></div>
+</div>
+</div>
+</div>
+<!-- 4. 디지털포용 -->
+<div class="project-card" data-category="edu">
+
+<div class="card-body">
+<div class="category-tag">📱 포용 교육 / 2024 ~ 2026</div>
+<h2 class="card-title">디지털포용 사업</h2>
+<p class="card-desc">디지털 소외계층 지원을 통해 모두가 함께하는 디지털 사회를 만들어갑니다. 2024년부터 전국의 노년층과 정보취약계층을 대상으로 맞춤형 디지털 교육을 제공합니다.</p><div class="card-gallery">
+<div class="gallery-img"><img alt="디지털포용사업" src="/images/business/digital-inclusion-1.jpg"/></div>
+<div class="gallery-img"><img alt="디지털교육" src="/images/business/digital-inclusion-2.jpg"/></div>
+<div class="gallery-img"><img alt="디지털교육" src="/images/business/digital-inclusion-3.jpg"/></div>
+</div>
+<div class="stats-grid">
+<div class="stat-cell"><div class="stat-num">8,519</div><div class="stat-label">시니어 교육 이수</div><div class="stat-sub">전국 취약계층 수료자</div></div>
+<div class="stat-cell"><div class="stat-num">112</div><div class="stat-label">문해교육사 양성</div><div class="stat-sub">지역사회 전문 강사 배출</div></div>
+<div class="stat-cell"><div class="stat-num">2+</div><div class="stat-label">년간 운영</div><div class="stat-sub">2024 ~ 2026 지속 확대</div></div>
+</div>
+<div class="features-grid">
+<div class="feature-card"><div class="feature-icon">📲</div><div class="feature-title">스마트폰 활용 교육</div><div class="feature-desc">기본 조작부터 앱 활용, 영상통화까지 시니어 눈높이에 맞는 단계별 스마트폰 교육</div></div>
+<div class="feature-card"><div class="feature-icon">🏧</div><div class="feature-title">키오스크 사용 교육</div><div class="feature-desc">음식점·병원·관공서 등 생활 속 키오스크를 자신 있게 이용할 수 있도록 실습 중심 교육</div></div>
+<div class="feature-card"><div class="feature-icon">💳</div><div class="feature-title">모바일 금융 및 생활 서비스</div><div class="feature-desc">인터넷뱅킹, 공공서비스 앱 등 모바일을 통한 생활 편의 서비스 활용 교육</div></div>
+<div class="feature-card"><div class="feature-icon">🔒</div><div class="feature-title">디지털 생활 안전 교육</div><div class="feature-desc">보이스피싱, 개인정보 보호 등 디지털 환경의 위험 요소를 인식하고 대처하는 방법 습득</div></div>
+</div>
+<div class="highlight-box">
+<h3>디지털 문해교육사 양성</h3>
+<p>시니어가 시니어를 가르치는 동료 학습 모델을 통해 더욱 공감 있는 교육이 가능합니다. 양성 과정을 수료한 디지털 문해교육사는 지역 복지관, 경로당, 주민센터 등 생활 밀착형 교육 현장에 배치됩니다.</p>
+</div>
+</div>
+</div>
+<!-- 5. 찾아가는 배움교실 -->
+<div class="project-card" data-category="edu">
+
+<div class="card-body">
+<div class="category-tag">🏫 이동형 교육 / 2019 ~ 현재</div>
+<h2 class="card-title">경기도 찾아가는 배움교실</h2>
+<p class="card-desc">교육 취약계층을 위한 이동형 맞춤 교육 지원 사업. 2019년부터 경기도 31개 시·군에서 전문 강사가 직접 찾아가 맞춤형 교육 프로그램을 제공합니다.</p><div class="card-gallery">
+<div class="gallery-img"><img alt="찾아가는 배움교실" src="/images/business/learning-class-1.jpg"/></div>
+<div class="gallery-img"><img alt="배움교실 활동" src="/images/business/learning-class-2.jpg"/></div>
+<div class="gallery-img"><img alt="배움교실 활동" src="/images/business/learning-class-3.jpg"/></div>
+</div>
+<div class="stats-grid">
+<div class="stat-cell"><div class="stat-num">574</div><div class="stat-label">수혜 기관 수</div><div class="stat-sub">학교, 아동센터, 복지시설</div></div>
+<div class="stat-cell"><div class="stat-num">386K</div><div class="stat-label">누적 학습 지원</div><div class="stat-sub">386,248명 직접 지원</div></div>
+<div class="stat-cell"><div class="stat-num">442</div><div class="stat-label">활동 강사 수</div><div class="stat-sub">검증된 전문 강사진</div></div>
+<div class="stat-cell"><div class="stat-num">50K</div><div class="stat-label">강사 파견 횟수</div><div class="stat-sub">50,321회 현장 방문</div></div>
+</div>
+<div class="features-grid">
+<div class="feature-card"><div class="feature-icon">🤖</div><div class="feature-title">미래교육</div><div class="feature-desc">AI, 로봇, 디지털 기술을 활용한 미래 역량 교육으로 4차 산업혁명 시대를 준비합니다.</div></div>
+<div class="feature-card"><div class="feature-icon">🎨</div><div class="feature-title">창의융합 교육</div><div class="feature-desc">다양한 교과를 융합한 창의적 사고력 개발 프로그램으로 문제해결 능력을 기릅니다.</div></div>
+<div class="feature-card"><div class="feature-icon">🎵</div><div class="feature-title">문화예술 교육</div><div class="feature-desc">예술적 감수성과 창의적 표현 능력을 키우는 문화예술 체험 프로그램을 운영합니다.</div></div>
+<div class="feature-card"><div class="feature-icon">🌿</div><div class="feature-title">인성교육 &amp; 기초학습</div><div class="feature-desc">공동체 의식·배려·협력 등 올바른 가치관 형성 및 학습 격차 해소를 위한 기초 지원</div></div>
+</div>
+<div class="highlight-box">
+<h3>교과 연계형 PBL 운영</h3>
+<p>모든 교육 프로그램은 프로젝트 기반 학습(PBL) 방식으로 운영됩니다. 학생들의 창의력, 문제해결 능력, 디지털 역량을 체계적으로 강화하며, 단순 암기식 교육을 넘어 실생활과 연결된 살아있는 배움을 실현합니다.</p>
+</div>
+</div>
+</div>
+<!-- 6. AI 모빌리티 캠프 -->
+<div class="project-card" data-category="edu">
+
+<div class="card-body">
+<div class="category-tag">🚗 모빌리티 교육 / 2024년 2~3월</div>
+<h2 class="card-title">AI 모빌리티 캠프</h2>
+<p class="card-desc">DSC 공유대학(선문대학교) 지능형전장제어시스템사업단과 협력하여 운영된 미래 모빌리티 교육 프로그램. 자율주행·AI·소프트웨어 기술 기반 인재 양성의 새로운 기준을 제시합니다.</p><div class="card-gallery">
+<div class="gallery-img"><img alt="AI모빌리티캠프" src="/images/business/ai-mobility-1.jpg"/></div>
+<div class="gallery-img"><img alt="모빌리티 교육" src="/images/business/ai-mobility-2.jpg"/></div>
+<div class="gallery-img"><img alt="모빌리티 교육" src="/images/business/ai-mobility-3.jpg"/></div>
+</div>
+<div class="info-row">
+<span class="info-badge">운영 지역 <strong>충남·세종·대전</strong></span>
+<span class="info-badge">협력 <strong>선문대학교 지능형전장제어시스템사업단</strong></span>
+</div>
+<div class="stats-grid">
+<div class="stat-cell"><div class="stat-num">16회</div><div class="stat-label">캠프 운영 횟수</div><div class="stat-sub">2024년 2~3월 집중 운영</div></div>
+<div class="stat-cell"><div class="stat-num">258명</div><div class="stat-label">총 교육 참여</div><div class="stat-sub">엔트리·파이썬 과정</div></div>
+<div class="stat-cell"><div class="stat-num">114.6%</div><div class="stat-label">목표 초과 달성</div><div class="stat-sub">계획 대비 성과 초과</div></div>
+<div class="stat-cell"><div class="stat-num">98점</div><div class="stat-label">교육 만족도</div><div class="stat-sub">참여 학생 설문 기준</div></div>
+</div>
+<div class="features-grid">
+<div class="feature-card"><div class="feature-icon">🚦</div><div class="feature-title">AI 모빌리티 기초 교육</div><div class="feature-desc">엔트리 기반 자율주행 알고리즘 체험과 모빌리티 센서·제어 시스템 이해, 데이터 기반 이동 기술 학습</div></div>
+<div class="feature-card"><div class="feature-icon">🐍</div><div class="feature-title">Python 기반 모빌리티 프로그래밍</div><div class="feature-desc">Python을 활용한 자율주행 프로그램 제작 및 모빌리티 데이터 분석, 실습 중심 프로젝트 교육</div></div>
+<div class="feature-card"><div class="feature-icon">🔧</div><div class="feature-title">실습 중심 캠프 운영</div><div class="feature-desc">1인 1기자재 실습형 교육으로 자율주행 실습 프로젝트를 직접 수행, LMS 기반 사전·사후 학습</div></div>
+<div class="feature-card"><div class="feature-icon">🎯</div><div class="feature-title">미래 모빌리티 진로 교육</div><div class="feature-desc">모빌리티 산업 전반에 대한 이해와 AI·자율주행 기술 분야의 진로 탐색, 지역 산업 및 대학 연계</div></div>
+</div>
+<div class="highlight-box">
+<h3>디지털 교육 격차 해소</h3>
+<p>인구소멸지역, 교육 소외지역, 다문화 가정, 저소득층 등 사회적 배려 대상 학생의 참여 비율을 전체의 72%까지 확대함으로써, 디지털 교육 격차 해소에 실질적으로 기여하였습니다.</p>
+</div>
+</div>
+</div>
+<!-- 7. 모빌리티 경진대회 -->
+<div class="project-card" data-category="contest">
+
+<div class="card-body">
+<div class="category-tag">🏁 경진대회 / 2023년</div>
+<h2 class="card-title">모빌리티 창의과학신기술 경진대회</h2>
+<p class="card-desc">미래 모빌리티 산업의 창의적 인재를 발굴하고, 충청권 디지털 인재 양성을 목표로 운영된 과학기술 경진대회. 2023년 성공적으로 개최되었으며, 전자신문 등 다수 매체에 보도되었습니다.</p><div class="card-gallery">
+<div class="gallery-img"><img alt="모빌리티 경진대회" src="/images/business/mobility-contest-1.jpg"/></div>
+<div class="gallery-img"><img alt="경진대회 현장" src="/images/business/mobility-contest-2.jpg"/></div>
+<div class="gallery-img"><img alt="경진대회 시상" src="/images/business/mobility-contest-3.jpg"/></div>
+</div>
+<div class="stats-grid">
+<div class="stat-cell"><div class="stat-num">755</div><div class="stat-label">총 참가자</div><div class="stat-sub">초·중·고·대학생 전 학년</div></div>
+<div class="stat-cell"><div class="stat-num">43</div><div class="stat-label">수상자</div><div class="stat-sub">대상·금상·은상·동상</div></div>
+<div class="stat-cell"><div class="stat-num">3</div><div class="stat-label">참여 지역</div><div class="stat-sub">충남·대전·세종 광역권</div></div>
+<div class="stat-cell"><div class="stat-num">4</div><div class="stat-label">참가 학교급</div><div class="stat-sub">초·중·고·대학교 전 단계</div></div>
+</div>
+<div class="features-grid">
+<div class="feature-card"><div class="feature-icon">🏎</div><div class="feature-title">모빌리티 기술 경진대회</div><div class="feature-desc">자율주행 및 모빌리티 기술 기반 프로젝트 수행, AI·SW 기반 문제 해결 미션, 팀 발표 및 기술 평가</div></div>
+<div class="feature-card"><div class="feature-icon">📖</div><div class="feature-title">모빌리티 교육 연계 프로그램</div><div class="feature-desc">사전 SW·AI 교육 콘텐츠 제공 및 LMS 기반 온라인 학습 운영으로 참가자의 기술 이해도 향상</div></div>
+<div class="feature-card"><div class="feature-icon">🎖</div><div class="feature-title">시상 및 성과 확산</div><div class="feature-desc">과학기술정보통신부 장관상 등 주요 기관상 수여, 대학·기업 전문가 심사, 언론·미디어 홍보</div></div>
+</div>
+<div class="highlight-box">
+<h3>체계적인 학습 시스템 구축</h3>
+<p>대회 운영의 효율성과 참가자 편의를 위해 전용 접수 플랫폼과 LMS(학습관리시스템)를 구축하였습니다. 참가 신청부터 사전 교육, 과제 제출까지 모든 과정을 온라인으로 통합 관리합니다.</p>
+</div>
+</div>
+</div>
+<!-- 8. 디지털새싹 -->
+<div class="project-card" data-category="national">
+
+<div class="card-body">
+<div class="category-tag">🌱 국가사업 / 2022년</div>
+<h2 class="card-title">디지털새싹 캠프 <small style="font-size:0.55em;font-weight:400;color:#64748b;">Digital Sprout</small></h2>
+<p class="card-desc">과학기술정보통신부와 교육부가 함께 추진하는 국가 디지털 인재 양성 프로그램. 전국 초·중·고 학생들이 AI·SW 기술을 체험하고 미래 핵심 역량을 키울 수 있도록 지원합니다.</p><div class="card-gallery">
+<div class="gallery-img"><img alt="디지털새싹캠프" src="/images/business/digital-sprout-1.jpg"/></div>
+<div class="gallery-img"><img alt="디지털새싹 활동" src="/images/business/digital-sprout-2.jpg"/></div>
+<div class="gallery-img"><img alt="디지털새싹 활동" src="/images/business/digital-sprout-3.jpg"/></div>
+</div>
+<div class="stats-grid">
+<div class="stat-cell"><div class="stat-num">2,852명</div><div class="stat-label">참여 학생 수</div><div class="stat-sub">목표 대비 101% 초과</div></div>
+<div class="stat-cell"><div class="stat-num">207회</div><div class="stat-label">캠프 운영 횟수</div><div class="stat-sub">전국 집중형·상시형</div></div>
+<div class="stat-cell"><div class="stat-num">6개</div><div class="stat-label">운영 프로그램</div><div class="stat-sub">AI·코딩·데이터·로봇 등</div></div>
+<div class="stat-cell"><div class="stat-num">259명</div><div class="stat-label">참여 전문 인력</div><div class="stat-sub">강사·멘토·교육 전문가</div></div>
+</div>
+<div class="features-grid">
+<div class="feature-card"><div class="feature-icon">🧠</div><div class="feature-title">인공지능 기초 및 활용</div><div class="feature-desc">AI의 개념과 원리를 이해하고, 머신러닝·자연어처리 등 실생활 AI 기술을 직접 체험</div></div>
+<div class="feature-card"><div class="feature-icon">💻</div><div class="feature-title">코딩 및 소프트웨어 개발</div><div class="feature-desc">블록 코딩부터 텍스트 기반 프로그래밍까지, 단계별로 소프트웨어 개발의 즐거움을 경험</div></div>
+<div class="feature-card"><div class="feature-icon">📊</div><div class="feature-title">데이터 분석 및 디지털 리터러시</div><div class="feature-desc">데이터를 수집·분석·시각화하는 과정을 통해 비판적 사고력과 디지털 리터러시를 함께 키움</div></div>
+<div class="feature-card"><div class="feature-icon">🤖</div><div class="feature-title">로봇·메타버스 미래기술 체험</div><div class="feature-desc">로봇 제어, 메타버스 환경 탐구 등 최신 미래기술을 직접 조작하며 창의적 문제 해결 능력 배양</div></div>
+</div>
+</div>
+</div>
+<!-- 9. 청년취업아카데미 -->
+<div class="project-card" data-category="national">
+
+<div class="card-body">
+<div class="category-tag">👔 고용노동부 위탁사업 / 2012 ~ 2021</div>
+<h2 class="card-title">청년취업아카데미 운영</h2>
+<p class="card-desc">고용노동부·한국산업인력공단 주관의 국가 청년 인재양성 사업으로, 2012년부터 2021년까지 10년간 ICT 산업 실무 중심 교육과 취업 연계를 성공적으로 운영한 사업입니다. 협회는 운영기관으로 선정되어 기관평가 A등급을 획득하며 높은 사업 수행 역량을 입증하였습니다.</p><div class="card-gallery single">
+<div class="gallery-img"><img alt="청년취업아카데미" src="/images/business/youth-academy-1.jpg"/></div>
+</div>
+<div class="info-row">
+<span class="info-badge">주요 참여 대학 <strong>성결대학교 · 수원대학교 · 안양대학교 · 호서대학교 외 다수</strong></span>
+</div>
+<div class="stats-grid">
+<div class="stat-cell"><div class="stat-num">3,080</div><div class="stat-label">교육인원</div><div class="stat-sub">ICT 분야 청년 대학생 및 구직자</div></div>
+<div class="stat-cell"><div class="stat-num">2,833</div><div class="stat-label">수료인원</div><div class="stat-sub">높은 수료율로 완성도 입증</div></div>
+<div class="stat-cell"><div class="stat-num">1,814</div><div class="stat-label">취업지원</div><div class="stat-sub">실질적인 취업 연계 성과</div></div>
+<div class="stat-cell"><div class="stat-num">385</div><div class="stat-label">참여기업</div><div class="stat-sub">ICT 전문기업 네트워크</div></div>
+</div>
+<div class="features-grid">
+<div class="feature-card"><div class="feature-icon">📐</div><div class="feature-title">맞춤형 교육과정</div><div class="feature-desc">ICT 산업 수요를 반영한 실무 중심 커리큘럼 설계 및 운영. 이론과 실습의 균형 있는 구성으로 현장 적응력 극대화</div></div>
+<div class="feature-card"><div class="feature-icon">🛠</div><div class="feature-title">실무 프로젝트</div><div class="feature-desc">기업 현장의 실제 과제를 반영한 프로젝트 기반 학습(PBL) 운영으로 청년 구직자의 실전 역량 강화</div></div>
+<div class="feature-card"><div class="feature-icon">🧑‍🏫</div><div class="feature-title">멘토링 프로그램</div><div class="feature-desc">ICT 현직 전문가와 연계한 진로 멘토링 및 직무 가이던스 제공으로 취업 준비의 질적 수준 향상</div></div>
+<div class="feature-card"><div class="feature-icon">🏢</div><div class="feature-title">기업 연계 취업지원</div><div class="feature-desc">385개 ICT 전문기업 네트워크를 활용한 채용 연계, 인턴십, 현장실습 기회 제공으로 실질적 취업 성과 창출</div></div>
+</div>
+</div>
+</div>
+</div>
+<script>
+function filterCards(category, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.project-card').forEach(card => {
+    if (category === 'all' || card.dataset.category === category) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>

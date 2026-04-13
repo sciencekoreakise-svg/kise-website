@@ -1,6 +1,7 @@
 export type NavChild = {
   label: string;
   href: string;
+  group?: string;
 };
 
 export type NavItem = {
@@ -26,12 +27,13 @@ export const navItems: NavItem[] = [
   {
     id: 'digital',
     label: '디지털확산',
-    href: '/digital/divide',
+    href: '/digital',
     children: [
-      { label: '디지털디바이드', href: '/digital/divide' },
-      { label: 'SW미래채움', href: '/digital/sw-future' },
-      { label: '사이언스트립', href: '/digital/science-trip' },
       { label: 'ICT AWARD KOREA', href: '/digital/ict-award' },
+      { label: 'Si-Tech Innovation Award', href: '/digital/science-trip' },
+      { label: 'SW미래채움', href: '/digital/sw-future' },
+      { label: '디지털포용 사업', href: '/digital/digital-inclusion' },
+      { label: 'AI 모빌리티 캠프', href: '/digital/ai-mobility' },
     ],
   },
   {
@@ -72,10 +74,11 @@ export const sectionMeta: Record<string, { title: string; breadcrumb: string }> 
   '/intro/history': { title: '연혁', breadcrumb: '협회소개 > 연혁' },
   '/intro/organization': { title: '조직도', breadcrumb: '협회소개 > 조직도' },
   '/intro/location': { title: '오시는길', breadcrumb: '협회소개 > 오시는길' },
-  '/digital/divide': { title: '디지털디바이드', breadcrumb: '디지털확산 > 디지털디바이드' },
-  '/digital/sw-future': { title: 'SW미래채움', breadcrumb: '디지털확산 > SW미래채움' },
-  '/digital/science-trip': { title: '사이언스트립', breadcrumb: '디지털확산 > 사이언스트립' },
   '/digital/ict-award': { title: 'ICT AWARD KOREA', breadcrumb: '디지털확산 > ICT AWARD KOREA' },
+  '/digital/sw-future': { title: 'SW미래채움', breadcrumb: '디지털확산 > SW미래채움' },
+  '/digital/science-trip': { title: 'Si-Tech Innovation Award', breadcrumb: '디지털확산 > Si-Tech Innovation Award' },
+  '/digital/digital-inclusion': { title: '디지털포용 사업', breadcrumb: '디지털확산 > 디지털포용 사업' },
+  '/digital/ai-mobility': { title: 'AI 모빌리티 캠프', breadcrumb: '디지털확산 > AI 모빌리티 캠프' },
   '/news/notice': { title: '공지사항', breadcrumb: '알림마당 > 공지사항' },
   '/news/press': { title: '보도자료', breadcrumb: '알림마당 > 보도자료' },
   '/news/archive': { title: '자료실', breadcrumb: '알림마당 > 자료실' },

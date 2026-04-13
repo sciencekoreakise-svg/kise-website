@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useRef, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ImagePlus, X } from 'lucide-react';
 
 function PressWriteForm() {
   const router = useRouter();
@@ -15,7 +15,12 @@ function PressWriteForm() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [media, setMedia] = useState('');
+  const [image, setImage] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [existingImage, setExistingImage] = useState<string | null>(null);
+  const [removeImage, setRemoveImage] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (isEdit && authed) {
@@ -25,9 +30,31 @@ function PressWriteForm() {
           setTitle(data.title);
           setContent(data.content);
           setMedia(data.media);
+          if (data.imageUrl) setExistingImage(data.imageUrl);
         });
     }
   }, [isEdit, editId, authed]);
+
+  // 이미지 선택 시 미리보기 생성
+  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0] || null;
+    setImage(file);
+    setRemoveImage(false);
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setPreview(url);
+    } else {
+      setPreview(null);
+    }
+  }
+
+  function handleRemoveImage() {
+    setImage(null);
+    setPreview(null);
+    setRemoveImage(true);
+    setExistingImage(null);
+    if (fileRef.current) fileRef.current.value = '';
+  }
 
   function handleAuth(e: React.FormEvent) {
     e.preventDefault();
@@ -39,18 +66,28 @@ function PressWriteForm() {
     if (!title.trim() || !content.trim()) return alert('제목과 내용을 입력하세요.');
     setSubmitting(true);
 
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append('media', media);
+    if (image) formData.append('image', image);
+    if (removeImage) formData.append('removeImage', 'true');
+
     const url = isEdit ? `/api/press/${editId}` : '/api/press';
     const method = isEdit ? 'PUT' : 'POST';
+
     const r = await fetch(url, {
       method,
-      headers: { 'Content-Type': 'application/json', 'x-admin-password': password },
-      body: JSON.stringify({ title, content, media }),
+      headers: { 'x-admin-password': password },
+      body: formData,
     });
 
     setSubmitting(false);
     if (r.ok) router.push('/news/press');
     else alert('비밀번호가 틀렸거나 오류가 발생했습니다.');
   }
+
+  const displayImage = preview || (removeImage ? null : existingImage);
 
   return (
     <article>
@@ -117,12 +154,52 @@ function PressWriteForm() {
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="내용을 입력하세요"
-              rows={12}
+              rows={10}
               className="w-full border border-gray-300 rounded px-3 py-2 text-sm outline-none focus:border-[#003087] resize-y"
             />
           </div>
 
-          <div className="flex items-center justify-end gap-3">
+          {/* 이미지 첨부 */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">대표 이미지</label>
+
+            {displayImage ? (
+              /* 미리보기 */
+              <div className="relative inline-block">
+                <img
+                  src={displayImage}
+                  alt="미리보기"
+                  className="max-h-64 max-w-full rounded-lg border border-gray-200 object-contain bg-gray-50"
+                />
+                <button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors"
+                >
+                  <X size={14} />
+                </button>
+                <p className="mt-1.5 text-xs text-gray-400">
+                  {image ? image.name : '현재 이미지'}
+                </p>
+              </div>
+            ) : (
+              /* 업로드 버튼 */
+              <label className="flex flex-col items-center justify-center gap-2 w-full h-36 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#003087] hover:bg-blue-50/30 transition-colors">
+                <ImagePlus size={28} className="text-gray-300" />
+                <span className="text-sm text-gray-400">클릭하여 이미지 선택</span>
+                <span className="text-xs text-gray-300">JPG, PNG, GIF, WEBP</span>
+                <input
+                  ref={fileRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleImageChange}
+                />
+              </label>
+            )}
+          </div>
+
+          <div className="flex items-center justify-end gap-3 pt-2">
             <button
               type="button"
               onClick={() => router.push('/news/press')}

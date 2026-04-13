@@ -10,6 +10,7 @@ interface PressItem {
   content: string;
   media: string;
   date: string;
+  imageUrl: string | null;
 }
 
 export default function PressDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -83,6 +84,16 @@ export default function PressDetailPage({ params }: { params: Promise<{ id: stri
             </div>
           </div>
         </div>
+
+        {item.imageUrl && (
+          <div className="px-6 pt-6">
+            <img
+              src={item.imageUrl}
+              alt={item.title}
+              className="w-full max-h-96 object-contain rounded-lg border border-gray-100 bg-gray-50"
+            />
+          </div>
+        )}
 
         <div className="px-6 py-6 min-h-40 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
           {item.content}

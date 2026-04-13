@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KISE 메인 히어로 섹션</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0B1F4A;
+            --sky: #2A7DE1;
+            --accent: #00E5FF;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--navy);
+            overflow: hidden;
+        }
+
+        /* 히어로 섹션 스타일 */
+        .hero2 {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-align: center;
+        }
+
+        #heroCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero2-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(11, 31, 74, 0.4) 100%);
+            z-index: 1;
+        }
+
+        .hero2-inner {
+            position: relative;
+            z-index: 2;
+            padding: 0 20px;
+        }
+
+        .hero2-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .hero2-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            animation: fadeUp 0.8s 0.2s ease both;
+        }
+
+        .hero2-accent {
+            background: linear-gradient(90deg, var(--accent), var(--sky));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero2-desc {
+            font-size: clamp(1.2rem, 3vw, 2.5rem);
+            opacity: 0.9;
+            margin-bottom: 40px;
+            animation: fadeUp 0.8s 0.4s ease both;
+        }
+
+        /* 키워드 칩 스타일 */
+        .hero2-chips-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            animation: fadeUp 0.8s 0.6s ease both;
+        }
+
+        .chip {
+            padding: 10px 22px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50px;
+            font-size: 0.95rem;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s;
+        }
+
+        .chip:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        /* 애니메이션 정의 */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* 스크롤 안내 */
+        .hero2-scroll {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            opacity: 0.6;
+            z-index: 2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="hero2">
+        <canvas id="heroCanvas"></canvas>
+        <div class="hero2-overlay"></div>
+
+        <div class="hero2-inner">
+            <div class="hero2-badge">사단법인 한국정보과학진흥협회</div>
+            <h1 class="hero2-title">
+                사람중심 가치, <span class="hero2-accent">모두를 위한 따뜻한 SW·AI</span>
+            </h1>
+            <p class="hero2-desc">함께 성장하는 디지털 혁신</p>
+
+            <div class="hero2-chips-row">
+                <span class="chip">디지털 산업진흥</span>
+                <span class="chip">ICT 인재양성</span>
+                <span class="chip">디지털 교육</span>
+                <span class="chip">디지털 포용</span>
+                <span class="chip">산학협력</span>
+                <span class="chip">기술 자격인증</span>
+            </div>
+        </div>
+
+    </section>
+
+    <script>
+        const canvas = document.getElementById('heroCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, nodes = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        // 파티클(점) 생성
+        for (let i = 0; i < 80; i++) {
+            nodes.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.fillStyle = 'rgba(0, 229, 255, 0.5)';
+
+            nodes.forEach((n, i) => {
+                n.x += n.vx;
+                n.y += n.vy;
+
+                if (n.x < 0 || n.x > width) n.vx *= -1;
+                if (n.y < 0 || n.y > height) n.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, 2, 0, Math.PI * 2);
+                ctx.fill();
+
+                // 가까운 점들끼리 선 연결
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const n2 = nodes[j];
+                    const dist = Math.hypot(n.x - n2.x, n.y - n2.y);
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(n.x, n.y);
+                        ctx.lineTo(n2.x, n2.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
+
+</body>
+
+</html>

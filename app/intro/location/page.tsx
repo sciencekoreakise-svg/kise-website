@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { MapPin, Phone, Mail, Clock, Bus, Train } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Bus, Train, ExternalLink } from 'lucide-react';
 
 export const metadata: Metadata = { title: '오시는길' };
 
@@ -10,26 +10,45 @@ export default function LocationPage() {
       <div className="w-10 h-1 rounded mb-8" style={{ backgroundColor: '#FF6600' }} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* 지도 (플레이스홀더) */}
-        <div
-          className="rounded-xl overflow-hidden aspect-square lg:aspect-auto lg:min-h-80 flex items-center justify-center text-white relative"
-          style={{ background: 'linear-gradient(135deg, #003087, #0066cc)' }}
-        >
-          <div className="text-center">
-            <MapPin size={48} className="mx-auto mb-3 opacity-60" />
-            <p className="text-sm opacity-70">지도 영역</p>
-            <p className="text-xs opacity-50 mt-1">
-              실제 서비스 시 Google Maps 또는
-              <br />
-              카카오맵 API로 교체하세요
-            </p>
+        {/* 지도 영역 */}
+        <div className="flex flex-col gap-3">
+          <div
+            className="rounded-xl overflow-hidden flex-1 min-h-64 flex flex-col items-center justify-center text-white relative"
+            style={{ background: 'linear-gradient(135deg, #003087, #0066cc)' }}
+          >
+            <MapPin size={40} className="mb-3 opacity-70" />
+            <p className="text-sm font-medium opacity-90">경기도 안양시 동안구 벌말로123</p>
+            <p className="text-xs opacity-70 mt-1">평촌스마트베이 A동 1410호</p>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+              <div
+                className="w-4 h-4 rounded-full border-4 border-white shadow-lg animate-bounce"
+                style={{ backgroundColor: '#FF6600' }}
+              />
+            </div>
           </div>
-          {/* 지도 핀 장식 */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <div
-              className="w-5 h-5 rounded-full border-4 border-white shadow-lg animate-bounce"
-              style={{ backgroundColor: '#FF6600' }}
-            />
+
+          {/* 지도 보기 버튼 */}
+          <div className="grid grid-cols-2 gap-2">
+            <a
+              href="https://map.kakao.com/?q=%EA%B2%BD%EA%B8%B0%EB%8F%84+%EC%95%88%EC%96%91%EC%8B%9C+%EB%8F%99%EC%95%88%EA%B5%AC+%EB%B2%8C%EB%A7%90%EB%A1%9C123+%ED%8F%89%EC%B4%8C%EC%8A%A4%EB%A7%88%ED%8A%B8%EB%B2%A0%EC%9D%B4"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium border transition-colors hover:opacity-90"
+              style={{ backgroundColor: '#FAE100', color: '#3C1E1E', borderColor: '#FAE100' }}
+            >
+              <ExternalLink size={14} />
+              카카오맵
+            </a>
+            <a
+              href="https://map.naver.com/v5/search/%EA%B2%BD%EA%B8%B0%EB%8F%84+%EC%95%88%EC%96%91%EC%8B%9C+%EB%8F%99%EC%95%88%EA%B5%AC+%EB%B2%8C%EB%A7%90%EB%A1%9C123+%ED%8F%89%EC%B4%8C%EC%8A%A4%EB%A7%88%ED%8A%B8%EB%B2%A0%EC%9D%B4"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium text-white transition-colors hover:opacity-90"
+              style={{ backgroundColor: '#03C75A' }}
+            >
+              <ExternalLink size={14} />
+              네이버지도
+            </a>
           </div>
         </div>
 
@@ -43,11 +62,11 @@ export default function LocationPage() {
                 <div>
                   <p className="font-medium text-gray-800">주소</p>
                   <p className="text-gray-600 text-sm">
-                    서울특별시 마포구 월드컵북로 396
+                    경기도 안양시 동안구 벌말로123
                     <br />
-                    누리꿈스퀘어 비즈니스타워 14층
+                    평촌스마트베이 A동 1410호(관양동 792-2)
                     <br />
-                    (우편번호: 03925)
+                    (우편번호: 14056)
                   </p>
                 </div>
               </li>
@@ -55,8 +74,8 @@ export default function LocationPage() {
                 <Phone size={18} className="shrink-0 mt-0.5" style={{ color: '#003087' }} />
                 <div>
                   <p className="font-medium text-gray-800">전화</p>
-                  <p className="text-gray-600 text-sm">02-6388-6000</p>
-                  <p className="text-gray-600 text-sm">팩스: 02-6388-6001</p>
+                  <p className="text-gray-600 text-sm">031-385-9844</p>
+                  <p className="text-gray-600 text-sm">팩스: 031-383-2088</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
@@ -64,10 +83,10 @@ export default function LocationPage() {
                 <div>
                   <p className="font-medium text-gray-800">이메일</p>
                   <a
-                    href="mailto:info@kise.or.kr"
+                    href="mailto:kise@kise.or.kr"
                     className="text-sm text-[#0066cc] hover:underline"
                   >
-                    info@kise.or.kr
+                    kise@kise.or.kr
                   </a>
                 </div>
               </li>
@@ -76,7 +95,6 @@ export default function LocationPage() {
                 <div>
                   <p className="font-medium text-gray-800">운영시간</p>
                   <p className="text-gray-600 text-sm">평일 09:00 ~ 18:00</p>
-                  <p className="text-gray-600 text-sm">점심시간 12:00 ~ 13:00</p>
                   <p className="text-gray-600 text-sm">(토·일·공휴일 휴무)</p>
                 </div>
               </li>
@@ -95,8 +113,11 @@ export default function LocationPage() {
                   <Train size={14} className="text-white" />
                 </div>
                 <div className="text-sm text-gray-700">
-                  <span className="font-medium">지하철</span> 6호선 월드컵경기장역 1번 출구에서
-                  도보 5분
+                  <span className="font-medium">지하철</span>
+                  <br />
+                  4호선 인덕원역 7번 출구에서 834m
+                  <br />
+                  4호선 평촌역 3번 출구에서 850m 이내
                 </div>
               </li>
               <li className="flex items-start gap-3">
@@ -107,8 +128,11 @@ export default function LocationPage() {
                   <Bus size={14} className="text-white" />
                 </div>
                 <div className="text-sm text-gray-700">
-                  <span className="font-medium">버스</span> 271, 571, 710번 '누리꿈스퀘어' 정류장
-                  하차
+                  <span className="font-medium">버스</span>
+                  <br />
+                  마을버스 5번, 5-1번 (스마트스퀘어/스마트베이 경유), 8번, 6-1번
+                  <br />
+                  일반버스 83번
                 </div>
               </li>
               <li className="flex items-start gap-3">
@@ -119,8 +143,7 @@ export default function LocationPage() {
                   P
                 </div>
                 <div className="text-sm text-gray-700">
-                  <span className="font-medium">주차</span> 누리꿈스퀘어 지하주차장 이용 가능
-                  (유료)
+                  <span className="font-medium">주차</span> 지하주차장 이용 가능 (유료)
                 </div>
               </li>
             </ul>

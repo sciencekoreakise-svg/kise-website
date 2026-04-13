@@ -4,41 +4,47 @@
     "title": "KISE, 전국 1만 명 어르신 디지털 역량 강화 교육 완료",
     "content": "KISE가 전국 1만 명 어르신을 대상으로 디지털 역량 강화 교육을 완료했습니다.",
     "media": "디지털데일리",
-    "date": "2024-12-08"
+    "date": "2024-12-08",
+    "imageUrl": "/images/press/20260413_digital-inclusion-2.jpg"
   },
   {
     "id": 7,
     "title": "과기정통부-KISE, SW미래채움 교육 소외지역 200개교 확대 협약",
     "content": "과학기술정보통신부와 KISE가 SW미래채움 교육을 소외지역 200개교로 확대하는 협약을 체결했습니다.",
     "media": "전자신문",
-    "date": "2024-12-03"
+    "date": "2024-12-03",
+    "imageUrl": "/images/press/20260413_learning-class-3.jpg"
   },
   {
     "id": 6,
     "title": "사이언스트립 참여 청소년 '과학자 꿈 키웠다' 90% 만족",
     "content": "사이언스트립에 참여한 청소년의 90%가 만족감을 표시했습니다.",
     "media": "연합뉴스",
-    "date": "2024-11-25"
+    "date": "2024-11-25",
+    "imageUrl": "/images/press/20260413_sitech-2.jpg"
   },
   {
     "id": 5,
     "title": "ICT AWARD KOREA 15년, 대한민국 ICT 인재의 등용문",
     "content": "ICT AWARD KOREA가 15년간 대한민국 ICT 인재 발굴의 등용문 역할을 해왔습니다.",
     "media": "ZDNet Korea",
-    "date": "2024-11-18"
+    "date": "2024-11-18",
+    "imageUrl": "/images/press/20260413_ict-award-3.jpg"
   },
   {
     "id": 4,
     "title": "KISE 이사장 '디지털 포용, 사회 통합의 핵심 과제'",
     "content": "KISE 이사장이 디지털 포용을 사회 통합의 핵심 과제로 강조했습니다.",
     "media": "아이뉴스24",
-    "date": "2024-11-10"
+    "date": "2024-11-10",
+    "imageUrl": "/images/press/20260413_digital-inclusion-3.jpg"
   },
   {
     "id": 3,
     "title": "한국정보과학진흥협회, 장애인 디지털 접근성 실태조사 결과 발표",
     "content": "한국정보과학진흥협회가 장애인 디지털 접근성 실태조사 결과를 발표했습니다.",
     "media": "전자신문",
-    "date": "2024-10-22"
+    "date": "2024-10-22",
+    "imageUrl": "/images/press/20260413_youth-academy-1.jpg"
   }
 ]

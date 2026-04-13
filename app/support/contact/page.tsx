@@ -59,20 +59,20 @@ export default function ContactPage() {
               {
                 icon: Phone,
                 label: '전화 문의',
-                value: '02-6388-6000',
+                value: '1544-8106',
                 sub: '평일 09:00~18:00',
               },
               {
                 icon: Mail,
                 label: '이메일 문의',
-                value: 'info@kise.or.kr',
+                value: 'kise@kise.or.kr',
                 sub: '영업일 3~5일 내 회신',
               },
               {
                 icon: MapPin,
                 label: '방문 문의',
-                value: '서울 마포구 월드컵북로 396',
-                sub: '누리꿈스퀘어 14층',
+                value: '경기도 안양시 동안구 벌말로123',
+                sub: '평촌스마트베이 A동 1410호',
               },
             ].map((contact) => {
               const Icon = contact.icon;
@@ -148,12 +148,10 @@ export default function ContactPage() {
                 className="w-full px-3 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-[#0066cc] bg-white"
               >
                 <option value="">선택해주세요</option>
-                <option value="digital">디지털디바이드 교육</option>
-                <option value="sw">SW미래채움</option>
-                <option value="science">사이언스트립</option>
-                <option value="ict">ICT AWARD KOREA</option>
-                <option value="general">일반 문의</option>
+                <option value="edu">교육문의</option>
                 <option value="mou">업무협약(MOU)</option>
+                <option value="general">일반문의</option>
+                <option value="recruit">강사채용문의</option>
                 <option value="other">기타</option>
               </select>
             </div>

@@ -28,20 +28,20 @@ export default function Footer() {
             자격검정사업단 <ExternalLink size={12} />
           </a>
           <a
-            href="https://www.msit.go.kr"
+            href="https://www.kise.or.kr/index/index_sgq.php"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 text-white/80 hover:text-white transition-colors"
+          >
+            과학경진대회 접수시스템 <ExternalLink size={12} />
+          </a>
+          <a
+            href="https://www.msit.go.kr/index.do"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1 text-white/80 hover:text-white transition-colors"
           >
             과학기술정보통신부 <ExternalLink size={12} />
-          </a>
-          <a
-            href="https://www.iaf.nu"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 text-white/80 hover:text-white transition-colors"
-          >
-            IAF <ExternalLink size={12} />
           </a>
         </div>
       </div>
@@ -52,7 +52,14 @@ export default function Footer() {
           {/* 로고 + 소개 */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <Image src="/kise-logo.png" alt="한국정보과학진흥협회 로고" width={120} height={40} className="object-contain" />
+              <Image
+                src="/kise-w.png"
+                alt="한국정보과학진흥협회 로고"
+                width={395}
+                height={84}
+                style={{ height: '38px', width: 'auto' }}
+                className="object-contain"
+              />
             </div>
             <p className="text-sm text-white/60 leading-relaxed">
               디지털 포용 사회 실현을 위해 디지털디바이드 해소, SW교육, 과학문화 확산 등
@@ -103,46 +110,23 @@ export default function Footer() {
               바로가기
             </h3>
             <ul className="grid grid-cols-2 gap-y-2 gap-x-4 text-sm text-white/70">
-              <li>
-                <Link href="/intro/greeting" className="hover:text-white transition-colors">
-                  인사말
-                </Link>
-              </li>
-              <li>
-                <Link href="/intro/history" className="hover:text-white transition-colors">
-                  연혁
-                </Link>
-              </li>
-              <li>
-                <Link href="/digital/divide" className="hover:text-white transition-colors">
-                  디지털디바이드
-                </Link>
-              </li>
-              <li>
-                <Link href="/digital/sw-future" className="hover:text-white transition-colors">
-                  SW미래채움
-                </Link>
-              </li>
-              <li>
-                <Link href="/news/notice" className="hover:text-white transition-colors">
-                  공지사항
-                </Link>
-              </li>
-              <li>
-                <Link href="/news/press" className="hover:text-white transition-colors">
-                  보도자료
-                </Link>
-              </li>
-              <li>
-                <Link href="/support/faq" className="hover:text-white transition-colors">
-                  FAQ
-                </Link>
-              </li>
-              <li>
-                <Link href="/support/contact" className="hover:text-white transition-colors">
-                  문의하기
-                </Link>
-              </li>
+              {[
+                { label: '인사말', href: '/intro/greeting' },
+                { label: '디지털확산', href: '/digital' },
+                { label: 'ICT AWARD KOREA', href: '/digital/ict-award' },
+                { label: 'Si-Tech Innovation Award', href: '/digital/science-trip' },
+                { label: 'SW미래채움', href: '/digital/sw-future' },
+                { label: '공지사항', href: '/news/notice' },
+                { label: '보도자료', href: '/news/press' },
+                { label: 'FAQ', href: '/support/faq' },
+                { label: '문의하기', href: '/support/contact' },
+              ].map(({ label, href }) => (
+                <li key={href}>
+                  <Link href={href} className="hover:text-white transition-colors">
+                    {label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

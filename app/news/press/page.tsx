@@ -10,9 +10,11 @@ interface PressItem {
   content: string;
   media: string;
   date: string;
+  imageUrl: string | null;
 }
 
 const PER_PAGE = 10;
+const DEFAULT_IMAGE = '/images/press-default.png';
 
 export default function PressPage() {
   const router = useRouter();
@@ -64,35 +66,50 @@ export default function PressPage() {
           <div
             key={item.id}
             onClick={() => router.push(`/news/press/${item.id}`)}
-            className="group relative p-5 rounded-xl border border-gray-200 hover:shadow-md hover:border-[#0066cc] transition-all cursor-pointer"
+            className="group relative rounded-xl border border-gray-200 hover:shadow-md hover:border-[#0066cc] transition-all cursor-pointer overflow-hidden"
           >
-            <button
-              onClick={(e) => handleDelete(e, item.id)}
-              className="absolute top-3 right-3 p-1 text-gray-300 hover:text-red-500 transition-colors"
-              title="삭제"
-            >
-              <Trash2 size={14} />
-            </button>
-            <div className="flex items-start gap-2 mb-3 pr-6">
-              <span
-                className="shrink-0 px-2 py-0.5 rounded text-white text-xs font-medium"
-                style={{ backgroundColor: '#0066cc' }}
-              >
-                {item.media || '매체'}
-              </span>
-            </div>
-            <div className="flex items-start gap-2 mb-3">
-              <Newspaper
-                size={16}
-                className="shrink-0 mt-0.5 text-gray-300 group-hover:text-[#0066cc] transition-colors"
+            {/* 썸네일 */}
+            <div className="relative h-44 bg-gray-100 overflow-hidden">
+              <img
+                src={item.imageUrl || DEFAULT_IMAGE}
+                alt={item.title}
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                onError={(e) => { (e.target as HTMLImageElement).src = DEFAULT_IMAGE; }}
               />
-              <p className="text-sm font-medium text-gray-800 group-hover:text-[#003087] transition-colors leading-relaxed">
-                {item.title}
-              </p>
+              {/* 매체 배지 */}
+              {item.media && (
+                <span
+                  className="absolute top-3 left-3 px-2 py-0.5 rounded text-white text-xs font-medium"
+                  style={{ backgroundColor: '#0066cc' }}
+                >
+                  {item.media}
+                </span>
+              )}
+              {/* 삭제 버튼 */}
+              <button
+                onClick={(e) => handleDelete(e, item.id)}
+                className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/40 hover:bg-red-500 text-white flex items-center justify-center transition-colors opacity-0 group-hover:opacity-100"
+                title="삭제"
+              >
+                <Trash2 size={13} />
+              </button>
             </div>
-            <div className="flex items-center gap-1 text-xs text-gray-400">
-              <Calendar size={12} />
-              {item.date}
+
+            {/* 텍스트 영역 */}
+            <div className="p-4">
+              <div className="flex items-start gap-2 mb-2">
+                <Newspaper
+                  size={15}
+                  className="shrink-0 mt-0.5 text-gray-300 group-hover:text-[#0066cc] transition-colors"
+                />
+                <p className="text-sm font-medium text-gray-800 group-hover:text-[#003087] transition-colors leading-relaxed line-clamp-2">
+                  {item.title}
+                </p>
+              </div>
+              <div className="flex items-center gap-1 text-xs text-gray-400">
+                <Calendar size={11} />
+                {item.date}
+              </div>
             </div>
           </div>
         ))}

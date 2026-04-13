@@ -1,0 +1,279 @@
+/* ──────────────────────────────────────────────────
+   kise-orgchart.html 의 CSS를 그대로 CSS Module로 이식
+   ────────────────────────────────────────────────── */
+
+.orgContainer {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 공통 박스 스타일 (z-index: 2 적용으로 선을 덮음) */
+.box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-weight: 700;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 2;
+}
+
+.boxSub {
+    font-size: 0.65rem;
+    font-weight: 400;
+    margin-bottom: 2px;
+}
+
+.navy {
+    background: #1a3a6b;
+    color: #fff;
+}
+
+.orange {
+    background: #FF6600;
+    color: #fff;
+}
+
+.orangeLine {
+    background: #fff;
+    color: #FF6600;
+    border: 2px solid #FF6600;
+}
+
+.teal {
+    background: #00bfa5;
+    color: #fff;
+}
+
+.gray {
+    background: #dce4f0;
+    color: #1a3a6b;
+    border: 1px solid #b0bed4;
+}
+
+.whiteCard {
+    background: #fff;
+    color: #333;
+    border: 1px solid #ccd;
+    border-radius: 6px;
+    padding: 0.4rem;
+    font-size: 0.75rem;
+    width: 135px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+/* 선 스타일 */
+.lineV {
+    width: 2px;
+    background: #99aac0;
+    margin: 0 auto;
+}
+
+.lineH {
+    height: 2px;
+    background: #99aac0;
+}
+
+/* ---------------------------------------------------
+   1단: 총회 - 이사회 - 감사 (이사회 중심 고정)
+   --------------------------------------------------- */
+.rowTop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+}
+
+.sideItem {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.sideLeft {
+    justify-content: flex-end;
+}
+
+.sideRight {
+    justify-content: flex-start;
+}
+
+/* ---------------------------------------------------
+   2단: 이사장 + CEO포럼
+   --------------------------------------------------- */
+.rowChairmanWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.ceoBadgePos {
+    position: absolute;
+    left: calc(50% + 60px);
+    display: flex;
+    align-items: center;
+    z-index: 1;
+}
+
+.ceoBadge {
+    border: 2px solid #FF6600;
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    background: #fff;
+    text-align: center;
+    line-height: 1.2;
+    position: relative;
+}
+
+.ceoBadge .t1,
+.t1 {
+    font-size: 0.6rem;
+    color: #FF6600;
+    font-weight: 600;
+}
+
+.ceoBadge .t2,
+.t2 {
+    font-size: 0.85rem;
+    color: #FF6600;
+    font-weight: 700;
+}
+
+.ceoBadge .t3,
+.t3 {
+    font-size: 0.65rem;
+    color: #888;
+}
+
+/* 하부 통합 그리드 시스템 */
+.gridLayout {
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    width: 100%;
+    align-items: start;
+    position: relative;
+}
+
+/* 부설기구 연결선 */
+.topBranch {
+    position: absolute;
+    top: -40px;
+    left: 100px;
+    right: 100px;
+    height: 2px;
+    background: #99aac0;
+}
+
+.topBranch::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 40px;
+    background: #99aac0;
+}
+
+.topBranch::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 2px;
+    height: 40px;
+    background: #99aac0;
+}
+
+.annexBox {
+    border: 2px solid;
+    border-radius: 12px;
+    padding: 1rem;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 190px;
+}
+
+.annexLabel {
+    font-size: 0.7rem;
+    font-weight: 700;
+    border: 1px solid;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.teamList {
+    width: 100%;
+    font-size: 0.75rem;
+    color: #444;
+    text-align: left;
+    padding-left: 10px;
+    margin-top: 5px;
+    line-height: 1.6;
+}
+
+/* 사무국 & 본부 섹션 */
+.secretariatSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.deptBranchWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.deptFork {
+    width: 380px;
+    display: flex;
+    flex-direction: column;
+}
+
+.deptForkHline {
+    width: 100%;
+    height: 2px;
+    background: #99aac0;
+}
+
+.deptForkVlines {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.deptForkVlines .lineV {
+    width: 2px;
+    height: 20px;
+    background: #99aac0;
+    margin: 0;
+}
+
+.deptGroup {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+}
+
+.deptCol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

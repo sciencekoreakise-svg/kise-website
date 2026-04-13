@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>조직도 – 한국정보과학진흥협회</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #f0f4fa;
+            padding: 3rem 1rem;
+        }
+
+        .org-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 공통 박스 스타일 (z-index: 2 적용으로 선을 덮음) */
+        .box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            font-weight: 700;
+            text-align: center;
+            white-space: nowrap;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .box-sub {
+            font-size: 0.65rem;
+            font-weight: 400;
+            margin-bottom: 2px;
+        }
+
+        .navy {
+            background: #1a3a6b;
+            color: #fff;
+        }
+
+        .orange {
+            background: #FF6600;
+            color: #fff;
+        }
+
+        .orange-line {
+            background: #fff;
+            color: #FF6600;
+            border: 2px solid #FF6600;
+        }
+
+        .teal {
+            background: #00bfa5;
+            color: #fff;
+        }
+
+        .gray {
+            background: #dce4f0;
+            color: #1a3a6b;
+            border: 1px solid #b0bed4;
+        }
+
+        .white-card {
+            background: #fff;
+            color: #333;
+            border: 1px solid #ccd;
+            border-radius: 6px;
+            padding: 0.4rem;
+            font-size: 0.75rem;
+            width: 135px;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        /* 선 스타일 */
+        .line-v {
+            width: 2px;
+            background: #99aac0;
+            margin: 0 auto;
+        }
+
+        .line-h {
+            height: 2px;
+            background: #99aac0;
+        }
+
+        /* ---------------------------------------------------
+           1단: 총회 - 이사회 - 감사 (이사회 중심 고정)
+           --------------------------------------------------- */
+        .row-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            position: relative;
+        }
+
+        .side-item {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .side-left {
+            justify-content: flex-end;
+        }
+
+        .side-right {
+            justify-content: flex-start;
+        }
+
+        /* ---------------------------------------------------
+           2단: 이사장 + CEO포럼 (끊어짐 완벽 해결)
+           --------------------------------------------------- */
+        .row-chairman-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            position: relative;
+        }
+
+        /* 배지와 선의 위치를 박스 안쪽(왼쪽)으로 더 당겨서 시작하게 함 */
+        .ceo-badge-pos {
+            position: absolute;
+            left: calc(50% + 60px);
+            display: flex;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .ceo-badge {
+            border: 2px solid #FF6600;
+            border-radius: 8px;
+            padding: 0.4rem 0.8rem;
+            background: #fff;
+            text-align: center;
+            line-height: 1.2;
+            position: relative;
+        }
+
+        .ceo-badge .t1 {
+            font-size: 0.6rem;
+            color: #FF6600;
+            font-weight: 600;
+        }
+
+        .ceo-badge .t2 {
+            font-size: 0.85rem;
+            color: #FF6600;
+            font-weight: 700;
+        }
+
+        .ceo-badge .t3 {
+            font-size: 0.65rem;
+            color: #888;
+        }
+
+        /* 하부 통합 그리드 시스템 */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr 200px;
+            width: 100%;
+            align-items: start;
+            position: relative;
+        }
+
+        /* 부설기구 연결선 */
+        .top-branch {
+            position: absolute;
+            top: -40px;
+            left: 100px;
+            right: 100px;
+            height: 2px;
+            background: #99aac0;
+        }
+
+        .top-branch::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2px;
+            height: 40px;
+            background: #99aac0;
+        }
+
+        .top-branch::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 2px;
+            height: 40px;
+            background: #99aac0;
+        }
+
+        .annex-box {
+            border: 2px solid;
+            border-radius: 12px;
+            padding: 1rem;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            width: 190px;
+        }
+
+        .annex-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            border: 1px solid;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-bottom: 5px;
+        }
+
+        .team-list {
+            width: 100%;
+            font-size: 0.75rem;
+            color: #444;
+            text-align: left;
+            padding-left: 10px;
+            margin-top: 5px;
+            line-height: 1.6;
+        }
+
+        /* 사무국 & 본부 섹션 */
+        .secretariat-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .dept-branch-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .dept-fork {
+            width: 380px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dept-fork-hline {
+            width: 100%;
+            height: 2px;
+            background: #99aac0;
+        }
+
+        .dept-fork-vlines {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .dept-fork-vlines .line-v {
+            width: 2px;
+            height: 20px;
+            background: #99aac0;
+            margin: 0;
+        }
+
+        .dept-group {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            width: 100%;
+        }
+
+        .dept-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="org-container">
+
+        <div class="row-top">
+            <div class="side-item side-left">
+                <div class="box navy"><span class="box-sub">General Assembly</span>총회</div>
+                <div class="line-h" style="width:60px;"></div>
+            </div>
+
+            <div class="box navy" style="padding: 0.6rem 2.2rem; min-width:160px;">
+                <span class="box-sub">Board of Directors</span>이사회
+            </div>
+
+            <div class="side-item side-right">
+                <div class="line-h" style="width:60px;"></div>
+                <div class="box navy"><span class="box-sub">Auditor</span>감사</div>
+            </div>
+        </div>
+
+        <div class="line-v" style="height:30px;"></div>
+
+        <div class="row-chairman-wrap">
+            <div class="box navy" style="min-width:140px;"><span class="box-sub">Chairman</span>이사장</div>
+
+            <div class="ceo-badge-pos">
+                <div class="line-h" style="width: 55px;"></div>
+                <div class="ceo-badge">
+                    <div class="t1">Member Companies</div>
+                    <div class="t2">KISE CEO포럼</div>
+                    <div class="t3">회원사 396개사</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="line-v" style="height:100px;"></div>
+
+        <div class="grid-layout">
+            <div class="top-branch"></div>
+
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                <div class="annex-box" style="border-color: #FF6600;">
+                    <div class="annex-label" style="color:#FF6600; border-color:#FF6600;">부설기구</div>
+                    <div class="box orange" style="font-size:0.8rem; width: 100%;">과학기술정보통신인증원</div>
+                    <div class="line-v" style="height:10px;"></div>
+                    <div class="box orange-line" style="width:120px;">인증원장</div>
+                    <div class="line-v" style="height:10px;"></div>
+                    <div class="box orange-line" style="width:120px;">인증관리단</div>
+                    <div class="team-list">
+                        <div>— 인증관리팀</div>
+                        <div>— 인증운영팀</div>
+                        <div>— 자격검정팀</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="secretariat-section">
+                <div class="box navy" style="min-width:140px; margin-top: -25px;"><span
+                        class="box-sub">Secretariat</span>사무국</div>
+
+                <div class="dept-branch-wrapper">
+                    <div class="line-v" style="height: 40px;"></div>
+                    <div class="dept-fork">
+                        <div class="dept-fork-hline"></div>
+                        <div class="dept-fork-vlines">
+                            <div class="line-v"></div>
+                            <div class="line-v"></div>
+                            <div class="line-v"></div>
+                        </div>
+                    </div>
+
+                    <div class="dept-group">
+                        <div class="dept-col">
+                            <div class="box gray" style="width:150px;">융합인재개발본부</div>
+                            <div class="line-v" style="height:15px;"></div>
+                            <div class="white-card">미래인재교육팀</div>
+                            <div class="white-card">대회행사운영팀</div>
+                        </div>
+                        <div class="dept-col">
+                            <div class="box gray" style="width:150px;">경영지원운영본부</div>
+                            <div class="line-v" style="height:15px;"></div>
+                            <div class="white-card">경영지원팀</div>
+                            <div class="white-card">회원조직관리팀</div>
+                        </div>
+                        <div class="dept-col">
+                            <div class="box gray" style="width:150px;">디지털포용본부</div>
+                            <div class="line-v" style="height:15px;"></div>
+                            <div class="white-card">디지털사회혁신팀</div>
+                            <div class="white-card">정보문화지원팀</div>
+                            <div class="white-card">프로젝트운영팀</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                <div class="annex-box" style="border-color: #00bfa5;">
+                    <div class="annex-label" style="color:#00bfa5; border-color:#00bfa5;">부설기구</div>
+                    <div class="box teal" style="width: 100%;">융합교육센터</div>
+                    <div class="line-v" style="height:15px;"></div>
+                    <div class="team-list">
+                        <div>— 자문교수단</div>
+                        <div>— 교육연구개발팀</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

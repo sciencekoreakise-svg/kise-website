@@ -30,7 +30,7 @@ export default function Header() {
     if (item.children) {
       return item.children.some((c) => pathname.startsWith(c.href));
     }
-    return false;
+    return pathname === item.href || pathname.startsWith(item.href + '/');
   };
 
   return (
@@ -39,43 +39,13 @@ export default function Header() {
       <div style={{ backgroundColor: '#003087' }} className="text-white text-xs">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-end gap-4 h-9">
           <a
-            href="https://www.msit.go.kr"
+            href="https://www.kise.or.kr/index/index_sgq.php"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1 opacity-80 hover:opacity-100 transition-opacity"
           >
             <ExternalLink size={11} />
-            과학기술정보통신부
-          </a>
-          <span className="opacity-30">|</span>
-          <a
-            href="https://www.iaf.nu"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 opacity-80 hover:opacity-100 transition-opacity"
-          >
-            <ExternalLink size={11} />
-            IAF
-          </a>
-          <span className="opacity-30">|</span>
-          <a
-            href="https://kise.re.kr"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 opacity-80 hover:opacity-100 transition-opacity"
-          >
-            <ExternalLink size={11} />
-            인증원
-          </a>
-          <span className="opacity-30">|</span>
-          <a
-            href="https://cad.or.kr"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 opacity-80 hover:opacity-100 transition-opacity"
-          >
-            <ExternalLink size={11} />
-            자격검정
+            과학경진대회 접수시스템
           </a>
         </div>
       </div>
@@ -86,7 +56,15 @@ export default function Header() {
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* 로고 */}
             <Link href="/" className="flex items-center shrink-0">
-              <Image src="/kise-logo.png" alt="한국정보과학진흥협회" width={160} height={48} className="object-contain" />
+              <Image
+                src="/kise-b.png"
+                alt="한국정보과학진흥협회"
+                width={1082}
+                height={187}
+                style={{ height: '40px', width: 'auto' }}
+                className="object-contain"
+                priority
+              />
             </Link>
 
             {/* 데스크탑 네비게이션 */}
@@ -117,20 +95,34 @@ export default function Header() {
                         {item.children && <ChevronDown size={14} className="opacity-60" />}
                       </Link>
                       {item.children && (
-                        <div className="nav-dropdown absolute top-full left-0 min-w-40 bg-white shadow-lg border border-gray-100 rounded-b-md z-50">
-                          {item.children.map((child) => (
-                            <Link
-                              key={child.href}
-                              href={child.href}
-                              className={`block px-5 py-3 text-sm hover:bg-blue-50 hover:text-[#003087] transition-colors ${
-                                pathname === child.href
-                                  ? 'bg-blue-50 text-[#003087] font-medium'
-                                  : 'text-gray-700'
-                              }`}
-                            >
-                              {child.label}
-                            </Link>
-                          ))}
+                        <div className="nav-dropdown absolute top-full left-0 min-w-44 bg-white shadow-lg border border-gray-100 rounded-b-md z-50">
+                          {item.children.reduce<{ seenGroups: Set<string>; els: React.ReactNode[] }>(
+                            ({ seenGroups, els }, child) => {
+                              if (child.group && !seenGroups.has(child.group)) {
+                                seenGroups.add(child.group);
+                                els.push(
+                                  <div key={`group-${child.group}`} className="px-5 pt-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-gray-400 border-t border-gray-100 first:border-t-0">
+                                    {child.group}
+                                  </div>
+                                );
+                              }
+                              els.push(
+                                <Link
+                                  key={child.href}
+                                  href={child.href}
+                                  className={`block px-5 py-3 text-sm hover:bg-blue-50 hover:text-[#003087] transition-colors ${child.group ? 'pl-6' : ''} ${
+                                    pathname === child.href
+                                      ? 'bg-blue-50 text-[#003087] font-medium'
+                                      : 'text-gray-700'
+                                  }`}
+                                >
+                                  {child.label}
+                                </Link>
+                              );
+                              return { seenGroups, els };
+                            },
+                            { seenGroups: new Set(), els: [] }
+                          ).els}
                         </div>
                       )}
                     </>
