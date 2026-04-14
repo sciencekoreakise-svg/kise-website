@@ -57,7 +57,7 @@ export default function GreetingPage() {
               <span className="text-xs text-gray-400">2026.03.26</span>
             </div>
             <p className="text-sm font-semibold text-gray-800 group-hover:text-blue-700 transition-colors leading-snug">
-              이사장 박승진 기고문 — 전자신문
+              [ET단상] 디지털 포용을 넘어, 이제는 AI 포용의 시대다
             </p>
             <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
               etnews.com <ExternalLink size={11} />
