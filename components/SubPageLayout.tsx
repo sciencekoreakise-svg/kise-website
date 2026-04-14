@@ -6,15 +6,14 @@ type Props = {
   title: string;
   breadcrumb: string[];
   sectionNav: { label: string; items: NavChild[] };
-  chips?: string[];
   children: React.ReactNode;
 };
 
-export default function SubPageLayout({ title, breadcrumb, sectionNav, chips, children }: Props) {
+export default function SubPageLayout({ title, breadcrumb, sectionNav, children }: Props) {
   return (
     <div>
       {/* 히어로 배너 */}
-      <PageBanner title={title} breadcrumb={breadcrumb} chips={chips} />
+      <PageBanner title={title} breadcrumb={breadcrumb} />
 
       {/* 컨텐츠 영역 */}
       <div className="max-w-7xl mx-auto px-4 py-10">

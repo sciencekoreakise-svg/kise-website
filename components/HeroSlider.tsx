@@ -85,20 +85,6 @@ export default function HeroSlider() {
           함께 성장하는 디지털 혁신
         </p>
 
-        {/* 키워드 칩 */}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            gap: '12px',
-            animation: 'hero2FadeUp 0.8s 0.6s ease both',
-          }}
-        >
-          {['디지털 산업진흥', 'ICT 인재양성', '디지털 교육', '디지털 포용', '산학협력', '기술 자격인증'].map((label) => (
-            <ChipItem key={label} label={label} />
-          ))}
-        </div>
       </div>
 
       {/* 스크롤 안내 */}
@@ -137,22 +123,3 @@ export default function HeroSlider() {
   );
 }
 
-function ChipItem({ label }: { label: string }) {
-  return (
-    <span
-      className="hero2-chip"
-      style={{
-        padding: '6px 14px',
-        background: 'rgba(255, 255, 255, 0.05)',
-        border: '1px solid rgba(255, 255, 255, 0.15)',
-        borderRadius: '50px',
-        fontSize: '0.75rem',
-        backdropFilter: 'blur(5px)',
-        transition: 'all 0.3s',
-        cursor: 'default',
-      }}
-    >
-      {label}
-    </span>
-  );
-}

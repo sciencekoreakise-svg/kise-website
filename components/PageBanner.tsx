@@ -6,10 +6,9 @@ import HeroCanvas from '@/components/HeroCanvas';
 type Props = {
   title: string;
   breadcrumb: string[];
-  chips?: string[];
 };
 
-export default function PageBanner({ title, breadcrumb, chips }: Props) {
+export default function PageBanner({ title, breadcrumb }: Props) {
   return (
     <div
       style={{
@@ -79,36 +78,6 @@ export default function PageBanner({ title, breadcrumb, chips }: Props) {
           </span>
         </h1>
 
-        {/* 키워드 칩 */}
-        {chips && chips.length > 0 && (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              flexWrap: 'wrap',
-              gap: '8px',
-              marginTop: '16px',
-              animation: 'pb-fadeUp 0.8s 0.4s ease both',
-            }}
-          >
-            {chips.map((label) => (
-              <span
-                key={label}
-                style={{
-                  padding: '6px 14px',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                  borderRadius: '50px',
-                  fontSize: '0.75rem',
-                  backdropFilter: 'blur(5px)',
-                  color: '#fff',
-                }}
-              >
-                {label}
-              </span>
-            ))}
-          </div>
-        )}
 
         {/* 브레드크럼 */}
         {breadcrumb.length > 0 && (
