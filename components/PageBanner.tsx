@@ -61,7 +61,7 @@ export default function PageBanner({ title, breadcrumb }: Props) {
             fontSize: 'clamp(1.5rem, 4vw, 3rem)',
             fontWeight: 900,
             lineHeight: 1.2,
-            marginBottom: '12px',
+            marginBottom: '8px',
             animation: 'pb-fadeUp 0.8s 0.2s ease both',
             fontFamily: "'Noto Sans KR', sans-serif",
           }}
@@ -77,6 +77,19 @@ export default function PageBanner({ title, breadcrumb }: Props) {
             {title}
           </span>
         </h1>
+
+        {/* 서브 슬로건 */}
+        <p
+          style={{
+            fontSize: 'clamp(0.75rem, 1.5vw, 0.95rem)',
+            color: 'rgba(255, 255, 255, 0.55)',
+            letterSpacing: '0.04em',
+            marginBottom: '12px',
+            animation: 'pb-fadeUp 0.8s 0.3s ease both',
+          }}
+        >
+          사람중심 가치, 모두를 위한 따뜻한 SW·AI
+        </p>
 
 
         {/* 브레드크럼 */}
