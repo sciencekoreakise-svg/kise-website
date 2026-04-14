@@ -141,10 +141,10 @@ export default function HomePage() {
               협회소개
             </Link>
             <Link
-              href="/intro/history"
+              href="/digital"
               className="px-6 py-3 border-2 border-white/50 text-white rounded-full font-semibold hover:border-white hover:bg-white/10 transition-colors text-sm text-center"
             >
-              연혁 보기
+              주요사업
             </Link>
           </div>
         </div>
