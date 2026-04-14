@@ -91,12 +91,15 @@ export default function NoticeBoard() {
             <p className="text-xs font-semibold uppercase tracking-widest text-[#FF6600] mb-2">
               알림마당
             </p>
-            <h2 className="text-2xl font-bold text-gray-900 leading-tight">
-              새로운
-              <br />
-              소식을
-              <br />
-              확인하세요
+            <h2 className="text-xl md:text-2xl font-bold text-gray-900 leading-tight">
+              <span className="lg:hidden">새로운 소식을 확인하세요</span>
+              <span className="hidden lg:block">
+                새로운
+                <br />
+                소식을
+                <br />
+                확인하세요
+              </span>
             </h2>
             <div className="mt-4 w-8 h-1 rounded" style={{ backgroundColor: '#003087' }} />
           </div>

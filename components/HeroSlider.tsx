@@ -9,6 +9,7 @@ export default function HeroSlider() {
         position: 'relative',
         width: '100%',
         height: '50vh',
+        minHeight: '360px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -104,10 +105,10 @@ export default function HeroSlider() {
       <div
         style={{
           position: 'absolute',
-          bottom: '40px',
+          bottom: '24px',
           left: '50%',
           transform: 'translateX(-50%)',
-          fontSize: '0.8rem',
+          fontSize: '0.75rem',
           letterSpacing: '2px',
           opacity: 0.6,
           zIndex: 2,

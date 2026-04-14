@@ -7,12 +7,12 @@ export default function Footer() {
     <footer style={{ backgroundColor: '#1a2b4a' }} className="text-white">
       {/* 패밀리 사이트 바 */}
       <div style={{ backgroundColor: '#003087' }} className="border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs sm:text-sm">
           <span className="font-semibold text-white/60 text-xs uppercase tracking-wider">
             Family Site
           </span>
           <a
-            href="https://kise.re.kr"
+            href="http://kise.re.kr/index.php"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1 text-white/80 hover:text-white transition-colors"
@@ -20,7 +20,7 @@ export default function Footer() {
             과학기술정보통신인증원 <ExternalLink size={12} />
           </a>
           <a
-            href="https://cad.or.kr"
+            href="http://cad.or.kr"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1 text-white/80 hover:text-white transition-colors"

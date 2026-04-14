@@ -64,7 +64,7 @@ function StatCard({ stat, started }: { stat: typeof stats[0]; started: boolean }
 
   return (
     <div
-      className="group relative bg-white rounded-2xl p-8 text-center shadow-sm hover:shadow-lg transition-all hover:-translate-y-1 border border-gray-100 overflow-hidden"
+      className="group relative bg-white rounded-2xl p-6 md:p-8 text-center shadow-sm hover:shadow-lg transition-all hover:-translate-y-1 border border-gray-100 overflow-hidden"
     >
       {/* 배경 글로우 */}
       <div
@@ -82,11 +82,11 @@ function StatCard({ stat, started }: { stat: typeof stats[0]; started: boolean }
 
       {/* 숫자 */}
       <div
-        className="text-4xl font-black mb-1 tabular-nums"
+        className="text-3xl md:text-4xl font-black mb-1 tabular-nums"
         style={{ color: stat.color }}
       >
         {display}
-        <span className="text-2xl font-bold">{stat.suffix}</span>
+        <span className="text-xl md:text-2xl font-bold">{stat.suffix}</span>
       </div>
 
       {/* 라벨 */}
@@ -126,7 +126,7 @@ export default function StatsSection() {
           <p className="text-xs font-semibold uppercase tracking-widest text-[#FF6600] mb-2">
             Our Impact
           </p>
-          <h2 className="text-3xl font-bold text-gray-900 mb-3">협회 성과</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">협회 성과</h2>
           <p className="text-gray-500 max-w-xl mx-auto text-sm">
             설립 이래 꾸준히 쌓아온 한국정보과학진흥협회의 디지털 혁신 성과입니다.
           </p>

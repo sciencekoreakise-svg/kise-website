@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
@@ -11,6 +11,11 @@ const notoSansKr = Noto_Sans_KR({
   display: 'swap',
 });
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
   title: {
     default: '한국정보과학진흥협회 (KISE)',
@@ -21,10 +26,31 @@ export const metadata: Metadata = {
   keywords: ['KISE', '한국정보과학진흥협회', '디지털디바이드', 'SW미래채움', 'ICT AWARD', '사이언스트립'],
   openGraph: {
     type: 'website',
+    url: 'https://kise-website.vercel.app',
     locale: 'ko_KR',
     siteName: '한국정보과학진흥협회',
-    title: '한국정보과학진흥협회 (KISE)',
+    title: '사단법인 한국정보과학진흥협회 (KISE)',
     description: '디지털 포용 사회 실현을 위한 한국정보과학진흥협회 공식 홈페이지',
+    images: [
+      {
+        url: 'https://kise-website.vercel.app/kise-kakao.png',
+        width: 1200,
+        height: 630,
+        alt: '사단법인 한국정보과학진흥협회 (KISE)',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '사단법인 한국정보과학진흥협회 (KISE)',
+    description: '디지털 포용 사회 실현을 위한 한국정보과학진흥협회 공식 홈페이지',
+    images: ['https://kise-website.vercel.app/kise-kakao.png'],
+  },
+  metadataBase: new URL('https://kise-website.vercel.app'),
+  icons: {
+    icon: '/kise-logo.png',
+    shortcut: '/kise-logo.png',
+    apple: '/kise-logo.png',
   },
 };
 

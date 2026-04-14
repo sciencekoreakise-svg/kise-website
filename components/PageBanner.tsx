@@ -15,7 +15,8 @@ export default function PageBanner({ title, breadcrumb, chips }: Props) {
       style={{
         position: 'relative',
         width: '100%',
-        height: '50vh',
+        height: '40vh',
+        minHeight: '240px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -43,12 +44,12 @@ export default function PageBanner({ title, breadcrumb, chips }: Props) {
         <div
           style={{
             display: 'inline-block',
-            padding: '6px 16px',
+            padding: '5px 14px',
             background: 'rgba(255, 255, 255, 0.1)',
             border: '1px solid rgba(255, 255, 255, 0.2)',
             borderRadius: '30px',
-            fontSize: '0.9rem',
-            marginBottom: '20px',
+            fontSize: '0.8rem',
+            marginBottom: '16px',
             animation: 'pb-fadeIn 0.8s ease forwards',
           }}
         >
@@ -58,7 +59,7 @@ export default function PageBanner({ title, breadcrumb, chips }: Props) {
         {/* 페이지 타이틀 */}
         <h1
           style={{
-            fontSize: 'clamp(1.8rem, 4vw, 3rem)',
+            fontSize: 'clamp(1.5rem, 4vw, 3rem)',
             fontWeight: 900,
             lineHeight: 1.2,
             marginBottom: '12px',

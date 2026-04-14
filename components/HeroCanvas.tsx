@@ -23,21 +23,27 @@ export default function HeroCanvas() {
     }
 
     let nodes: Node[] = [];
+    let nodeCount = 80;
+    let connectDist = 150;
 
     function resize() {
       width = canvas!.width = canvas!.offsetWidth;
       height = canvas!.height = canvas!.offsetHeight;
+      // 화면 면적 기준으로 노드 수·연결 거리 조정
+      const area = width * height;
+      nodeCount = Math.max(20, Math.min(80, Math.floor(area / 7000)));
+      connectDist = width < 640 ? 90 : width < 1024 ? 120 : 150;
+      // 리사이즈 시 노드 재생성
+      nodes = Array.from({ length: nodeCount }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+      }));
     }
 
     window.addEventListener('resize', resize);
     resize();
-
-    nodes = Array.from({ length: 80 }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.5,
-      vy: (Math.random() - 0.5) * 0.5,
-    }));
 
     function draw() {
       if (!ctx) return;
@@ -58,13 +64,15 @@ export default function HeroCanvas() {
         for (let j = i + 1; j < nodes.length; j++) {
           const n2 = nodes[j];
           const dist = Math.hypot(n.x - n2.x, n.y - n2.y);
-          if (dist < 150) {
+          if (dist < connectDist) {
+            ctx.globalAlpha = 1 - dist / connectDist;
             ctx.beginPath();
             ctx.moveTo(n.x, n.y);
             ctx.lineTo(n2.x, n2.y);
             ctx.stroke();
           }
         }
+        ctx.globalAlpha = 1;
       });
 
       animId = requestAnimationFrame(draw);

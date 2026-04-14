@@ -60,8 +60,8 @@ export default function HomePage() {
             <p className="text-xs font-semibold uppercase tracking-widest text-[#FF6600] mb-2">
               Business
             </p>
-            <h2 className="text-3xl font-bold text-gray-900 mb-3">주요 사업</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">주요 사업</h2>
+            <p className="text-sm md:text-base text-gray-500 max-w-xl mx-auto">
               한국정보과학진흥협회는 디지털 포용 사회 실현을 위해 다양한 공익사업을 추진하고
               있습니다.
             </p>
@@ -74,8 +74,7 @@ export default function HomePage() {
                 <Link
                   key={biz.title}
                   href={biz.href}
-                  className="group relative rounded-xl overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1"
-                  style={{ minHeight: '280px' }}
+                  className="group relative rounded-xl overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1 min-h-[240px] md:min-h-[280px]"
                 >
                   {/* 배경 이미지 */}
                   <div
@@ -90,7 +89,7 @@ export default function HomePage() {
                     }}
                   />
                   {/* 콘텐츠 */}
-                  <div className="relative z-10 p-6 flex flex-col h-full" style={{ minHeight: '280px' }}>
+                  <div className="relative z-10 p-6 flex flex-col h-full min-h-[240px] md:min-h-[280px]">
                     <div
                       className="w-12 h-12 rounded-xl flex items-center justify-center text-white mb-4 transition-transform group-hover:scale-110"
                       style={{ backgroundColor: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(4px)' }}
@@ -120,32 +119,30 @@ export default function HomePage() {
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-white -translate-y-1/2 translate-x-1/4" />
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 flex flex-col lg:flex-row items-center justify-between gap-8">
-          <div>
+        <div className="relative max-w-7xl mx-auto px-4 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+          <div className="flex-1">
             <p className="text-xs font-semibold uppercase tracking-widest text-[#FF6600] mb-2">
               About KISE
             </p>
-            <h2 className="text-3xl font-bold text-white mb-4">
-              디지털 포용 사회 실현을 위한
-              <br />
-              한국정보과학진흥협회
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+              디지털 포용 사회 실현을 위한 한국정보과학진흥협회
             </h2>
-            <p className="text-white/70 max-w-lg leading-relaxed">
+            <p className="text-sm md:text-base text-white/70 max-w-lg leading-relaxed">
               디지털 신산업 분야 육성 및 SW AI 인재 양성과 디지털 소외계층에 대한 교육확대를 위해
               과학기술정보통신부 소관의 비영리 공익법인으로서 디지털 역량 강화와
               정보 접근성 향상에 앞장서고 있습니다.
             </p>
           </div>
-          <div className="flex gap-4 shrink-0">
+          <div className="flex flex-row sm:flex-row flex-wrap gap-3 shrink-0">
             <Link
               href="/intro/greeting"
-              className="px-6 py-3 bg-white text-[#003087] rounded-full font-semibold hover:bg-blue-50 transition-colors"
+              className="px-6 py-3 bg-white text-[#003087] rounded-full font-semibold hover:bg-blue-50 transition-colors text-sm text-center"
             >
               협회소개
             </Link>
             <Link
               href="/intro/history"
-              className="px-6 py-3 border-2 border-white/50 text-white rounded-full font-semibold hover:border-white hover:bg-white/10 transition-colors"
+              className="px-6 py-3 border-2 border-white/50 text-white rounded-full font-semibold hover:border-white hover:bg-white/10 transition-colors text-sm text-center"
             >
               연혁 보기
             </Link>

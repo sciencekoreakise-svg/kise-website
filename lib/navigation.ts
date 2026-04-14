@@ -39,13 +39,13 @@ export const navItems: NavItem[] = [
   {
     id: 'cert',
     label: '과학기술정보통신인증원',
-    href: 'https://kise.re.kr',
+    href: 'http://kise.re.kr/index.php',
     external: true,
   },
   {
     id: 'qual',
     label: '자격검정사업단',
-    href: 'https://cad.or.kr',
+    href: 'http://cad.or.kr',
     external: true,
   },
   {

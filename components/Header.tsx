@@ -36,7 +36,7 @@ export default function Header() {
   return (
     <header className="w-full sticky top-0 z-50 shadow-md">
       {/* 상단 유틸리티 바 */}
-      <div style={{ backgroundColor: '#003087' }} className="text-white text-xs">
+      <div style={{ backgroundColor: '#003087' }} className="hidden sm:block text-white text-xs">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-end gap-4 h-9">
           <a
             href="https://www.kise.or.kr/index/index_sgq.php"
@@ -142,8 +142,8 @@ export default function Header() {
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="검색어를 입력하세요"
-                      className="w-48 text-sm outline-none"
+                      placeholder="검색어 입력"
+                      className="w-24 sm:w-44 text-sm outline-none"
                       onKeyDown={(e) => e.key === 'Escape' && setSearchOpen(false)}
                     />
                     <button onClick={() => setSearchOpen(false)}>

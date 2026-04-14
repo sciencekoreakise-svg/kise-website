@@ -27,12 +27,19 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
   line-height: 1.6;
   word-break: keep-all;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 /* Utility bar */
@@ -74,6 +81,11 @@ body {
 .reveal-d2 { transition-delay: 0.2s; }
 .reveal-d3 { transition-delay: 0.3s; }
 .reveal-d4 { transition-delay: 0.4s; }
+
+/* Mobile: prevent tap highlight flicker */
+a, button {
+  -webkit-tap-highlight-color: transparent;
+}
 
 /* Scrollbar */
 ::-webkit-scrollbar {
