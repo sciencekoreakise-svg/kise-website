@@ -1,80 +1,150 @@
 import type { Metadata } from 'next';
-import { Code2, Users, Trophy, Network, CalendarDays, Target, Building2, ArrowRight, TrendingUp, Lightbulb, Leaf } from 'lucide-react';
+import { Monitor, GraduationCap, MapPin, Target, Users, School, Building2, Globe, Trophy } from 'lucide-react';
 
 export const metadata: Metadata = { title: 'SW미래채움' };
 
-const stats = [
-  { value: '207', label: '캠프 운영', desc: 'SW·AI 교육 캠프 총 207회 성공적으로 운영' },
-  { value: '2,852', label: '학생 참여', desc: '초·중·고 학생 2,852명 프로그램 참여' },
-  { value: '2,731', label: '교육 이수', desc: '참여 학생 중 2,731명이 전 과정 이수 완료' },
-  { value: '1,800+', label: 'AI 페스티벌', desc: 'SW·AI 체험 행사에 학생·학부모 1,800명 이상 참여' },
-];
-
-const programs = [
-  {
-    icon: Code2,
-    title: 'SW·AI 교육 프로그램',
-    desc: '초·중·고 학생 대상 코딩, Python, AI 교육 및 로봇·피지컬 컴퓨팅 프로젝트 기반 학습 운영',
-  },
-  {
-    icon: Users,
-    title: 'SW·AI 캠프 및 체험',
-    desc: '방학 집중 캠프, AI 로봇·스마트시티 체험, 데이터 분석 및 알고리즘 프로그램 운영',
-  },
-  {
-    icon: Trophy,
-    title: '페스티벌 및 경진대회',
-    desc: 'SW 발명 경진대회, 데이터 아이디어톤, 학생 작품 전시 및 발표 행사 개최',
-  },
-  {
-    icon: Network,
-    title: 'SW 교육 생태계 구축',
-    desc: '지역 강사 양성, 교육기관·대학 협력 운영, SW 교육 거점센터 구축 및 확산',
-  },
-];
-
-const satisfactions = [
-  { label: '학생 만족도', value: 90.8, desc: '교육에 참여한 초·중·고 학생들의 만족도' },
-  { label: '교사 만족도', value: 98.9, desc: '함께한 교사들이 평가한 프로그램 만족도' },
-  { label: '학부모 만족도', value: 99.2, desc: '자녀 교육을 경험한 학부모들의 만족도' },
-];
-
-const impacts = [
-  {
-    icon: TrendingUp,
-    title: '교육 격차 해소',
-    desc: '도심과 지역 간 SW 교육 불균형을 해소하는 거점 역할 수행',
-  },
-  {
-    icon: Lightbulb,
-    title: '인재 발굴 및 육성',
-    desc: '경진대회·페스티벌을 통한 창의 인재 조기 발굴 및 지속 성장 지원',
-  },
-  {
-    icon: Leaf,
-    title: '지속 가능한 생태계',
-    desc: '지역 강사 양성과 대학 협력으로 자립적 SW 교육 생태계 완성',
-  },
-];
-
-const news = [
-  {
-    title: '경기도, 2026 청소년 AI교육 강화 위한 미래채움 성과교류회 개최...SW미래채움 우수사례 공유',
-    summary:
-      '경기도는 경기도경제과학진흥원, 한국정보과학진흥협회와 함께 고양 SW미래채움 센터에서 \'2025 경기 SW미래채움 강사 성과교류회\'를 열었다.',
-    source: '이코노뉴스',
-    date: '2025.12.17',
-  },
-  {
-    title: '\'경기SW미래채움 북부센터\' 고양시 이전 개소, AI 페스티벌 700여 명 AI 체험',
-    summary:
-      '경기SW미래채움 북부센터가 의정부시에서 고양시로 이전해 새롭게 문을 열었다. 경기 SW미래채움 북부센터는 고양시 창조혁신캠퍼스 16층에 자리 잡았다.',
-    source: '위클리오늘',
-    date: '2025.10.27',
-  },
-];
-
 const ACCENT = '#C96B30';
+
+const centerItems = [
+  { label: '체험존', desc: 'SW·AI 최신 기술을 직접 체험할 수 있는 공간' },
+  { label: '교육장', desc: '단계별 SW 교육을 위한 전용 교육 환경' },
+  { label: '교구재', desc: 'AI·드론·IoT 등 실습용 최신 교구재 구비' },
+];
+
+const instructorItems = [
+  '체계적인 SW교육을 통해 수준별 SW강사 양성 및 10개월 경력개발 지원',
+  '지역 내 다양한 교육 수요 대응을 위한 역량강화 교육 및 활동 지원 (자격증 등)',
+];
+
+const centerEdu = [
+  '최대 170시간 이상의 단계별 SW·AI 교육',
+  'AI, 메타버스, IoT, 드론 등 최신 기술 체험',
+];
+
+const visitEdu = [
+  '지역 내 교육수요를 기반으로 찾아가는 교육 추진',
+  '지역 초·중등학교 / 도서벽지 / 특수학교 / 지역아동센터 등',
+];
+
+const yearlyData = [
+  {
+    year: '2019',
+    regions: 5,
+    regionLabel: '인천, 강원, 경남, 충북, 전남',
+    newRegions: '신규 5개 지역',
+    instructors: '504명',
+    students: '22,322명',
+    visitRate: '83.4%',
+    visitStudents: '18,617명',
+    initiatives: [
+      'SW미래채움 5개 센터 구축',
+      '제1회 강사 네트워킹 데이 개최',
+      'SW강사 수업과정안 공모전 개최',
+    ],
+  },
+  {
+    year: '2020',
+    regions: 10,
+    regionLabel: '경기, 충남, 제주, 경북, 울산 신규 추가',
+    newRegions: '신규 5개 추가 (총 10개)',
+    instructors: '1,026명',
+    students: '39,480명',
+    visitRate: '86.4%',
+    visitStudents: '34,096명',
+    initiatives: [
+      'SW미래채움 5개 센터 추가 구축',
+      '제2회 강사 네트워킹 데이 개최',
+      'SW강사 수업과정안 공모전 개최',
+      'SW교육 커리큘럼 가이드라인 개발',
+      '고등부 글로벌 AI교육프로그램 운영 (인공지능 자율주행 과정)',
+    ],
+  },
+  {
+    year: '2021',
+    regions: 10,
+    regionLabel: '10개 지역 계속 운영',
+    newRegions: '10개 지역 계속',
+    instructors: '824명',
+    students: '110,991명',
+    visitRate: '84.9%',
+    visitStudents: '94,191명',
+    initiatives: [
+      'SW미래채움 10개 센터 운영',
+      '제3회 강사 네트워킹 데이 개최',
+      'SW강사 수업과정안 공모전 개최',
+      '초·중학생 대상 코딩프로젝트 챌린지 개최',
+      '고등부 글로벌 AI교육프로그램 운영 (자율주행, 데이터 사이언스 2개 과정)',
+    ],
+  },
+  {
+    year: '2022',
+    regions: 11,
+    regionLabel: '대구 신규 추가',
+    newRegions: '신규 1개 추가 (총 11개)',
+    instructors: '922명',
+    students: '156,207명',
+    visitRate: '81.5%',
+    visitStudents: '127,246명',
+    initiatives: [
+      'SW미래채움 1개 센터 추가 운영',
+      '제4회 강사 네트워킹 데이 개최',
+      'SW강사 수업과정안 공모전 개최',
+      '초·중학생 대상 코딩프로젝트 챌린지 개최',
+      '고등부 글로벌 AI교육프로그램 운영',
+      'SW강사 민간자격증 도입',
+    ],
+  },
+  {
+    year: '2023',
+    regions: 13,
+    regionLabel: '광주, 전북 신규 추가',
+    newRegions: '신규 2개 추가 (총 13개)',
+    instructors: '1,181명',
+    students: '253,742명',
+    visitRate: '84.3%',
+    visitStudents: '213,847명',
+    initiatives: [
+      'SW미래채움 2개 센터 추가 운영',
+      '제5회 강사 네트워킹 데이 개최',
+      'SW강사 수업과정안 공모전 개최',
+      '초·중학생 대상 코딩프로젝트 챌린지 개최',
+      '고등부 글로벌 코딩챌린지 개최',
+      'SW미래채움 역량강화 교육 추진',
+      'SW미래채움 늘봄학교 협력',
+    ],
+  },
+];
+
+const keyInitiatives = [
+  {
+    icon: Building2,
+    title: '지역 확대',
+    summary: '총 13개 지역 내 SW미래채움 센터 구축·운영을 통한 전 지역 빈틈없는 SW교육 추진',
+    items: ['강원', '경남', '인천', '전남', '충북', '경기', '경북', '울산', '충남', '제주', '대구', '광주', '전북'],
+    itemType: 'tag' as const,
+  },
+  {
+    icon: Monitor,
+    title: 'SW교육 운영',
+    summary: '초·중등 및 고등학생을 대상으로 수준별 맞춤 교육 프로그램 운영',
+    items: ['(초·중) 코딩프로젝트 챌린지', '(고등) 글로벌 AI·SW교육 프로그램'],
+    itemType: 'bullet' as const,
+  },
+  {
+    icon: GraduationCap,
+    title: '강사 양성',
+    summary: 'SW전문강사의 전문성 향상 및 네트워크 구축 지원',
+    items: ['강사 수업과정안 공모전', '강사 네트워킹 데이 개최'],
+    itemType: 'bullet' as const,
+  },
+];
+
+const cumulativeStats = [
+  { icon: Building2, label: '운영 센터', value: '13개 지역', sub: '2023년 기준' },
+  { icon: GraduationCap, label: 'SW강사 누적 양성', value: '4,457명', sub: '2019~2023 합계' },
+  { icon: Users, label: '학생 교육 누적', value: '582,742명', sub: '2019~2023 합계' },
+  { icon: School, label: '찾아가는 교육 비율', value: '84% 이상', sub: '매년 평균' },
+];
 
 export default function SwFuturePage() {
   return (
@@ -92,148 +162,279 @@ export default function SwFuturePage() {
           </p>
           <h3 className="text-xl font-bold mb-2">미래를 코딩하다: SW미래채움 사업</h3>
           <p className="text-sm opacity-80 leading-relaxed">
-            과학기술정보통신부와 지방자치단체가 함께 만들어가는 지역 기반 SW·AI 교육의 새로운 이야기.
-            2025년부터 지역 기반의 SW 교육 생태계를 구축하고 미래 디지털 인재를 체계적으로 양성하고 있습니다.
+            지역 내 SW교육 접근성을 확보하고, 초·중등교육 단계에서부터의 체계적인 디지털 교육을
+            추진하여 디지털 소양을 갖춘 지역 인재 양성 기반을 마련합니다.
           </p>
         </div>
       </div>
 
-      {/* 사업 개요 */}
+      {/* 사업 목적 */}
       <section>
-        <h3 className="text-lg font-bold text-gray-800 mb-4">사업 개요</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {[
-            { icon: CalendarDays, title: '사업 기간', value: '2025년 ~ 현재', sub: '지속적인 확대 운영 중' },
-            { icon: Target, title: '주요 목표', value: '지역 기반 SW 교육 생태계 구축', sub: '미래 디지털 인재 양성' },
-            { icon: Building2, title: '추진 주체', value: '과학기술정보통신부', sub: '지방자치단체 공동 추진' },
-          ].map((item) => {
-            const Icon = item.icon;
-            return (
-              <div key={item.title} className="rounded-xl border border-gray-200 p-5 bg-orange-50/40">
-                <div className="flex items-center gap-2 mb-2">
-                  <Icon size={18} style={{ color: ACCENT }} />
-                  <span className="text-sm font-semibold text-gray-600">{item.title}</span>
-                </div>
-                <p className="font-bold text-gray-900 text-sm">{item.value}</p>
-                <p className="text-xs text-gray-500 mt-0.5">{item.sub}</p>
-              </div>
-            );
-          })}
+        <h3 className="text-lg font-bold text-gray-800 mb-4">사업 목적</h3>
+        <div className="rounded-xl border border-orange-200 bg-orange-50/40 p-6 flex gap-4">
+          <div
+            className="shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-white"
+            style={{ backgroundColor: ACCENT }}
+          >
+            <Target size={20} />
+          </div>
+          <p className="text-sm text-gray-700 leading-relaxed self-center">
+            지역 내 SW교육 접근성을 확보하고, 초·중등교육 단계에서부터의 체계적인 디지털 교육을
+            추진하여 디지털 소양을 갖춘 지역 인재 양성 기반 마련
+          </p>
         </div>
       </section>
 
-      {/* 주요 프로그램 */}
+      {/* 주요 추진사항 */}
       <section>
-        <h3 className="text-lg font-bold text-gray-800 mb-4">주요 프로그램</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {programs.map((prog) => {
-            const Icon = prog.icon;
-            return (
-              <div key={prog.title} className="flex gap-4 rounded-xl border border-gray-200 p-5 hover:border-orange-300 transition-colors">
-                <div
-                  className="shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-white"
-                  style={{ backgroundColor: ACCENT }}
-                >
-                  <Icon size={20} />
-                </div>
-                <div>
-                  <p className="font-bold text-gray-800 mb-1">{prog.title}</p>
-                  <p className="text-sm text-gray-600 leading-relaxed">{prog.desc}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* 성과 수치 */}
-      <section>
-        <h3 className="text-lg font-bold text-gray-800 mb-1">숫자로 증명하는 성과</h3>
-        <p className="text-sm text-gray-500 mb-4">
-          207회의 캠프 운영, 2,852명의 참여 학생, 그리고 압도적인 만족도로 지역 SW 교육의 새로운 기준을 세우고 있습니다.
+        <h3 className="text-lg font-bold text-gray-800 mb-1">주요 추진사항</h3>
+        <p className="text-sm text-gray-500 mb-6">
+          센터 구축부터 강사 양성, 학생 교육까지 체계적인 SW 교육 생태계를 운영합니다.
         </p>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {stats.map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-xl p-5 text-center border border-orange-100 bg-orange-50/50"
+
+        {/* 1. SW미래채움 센터 구축 */}
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-3">
+            <span
+              className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
+              style={{ backgroundColor: ACCENT }}
             >
-              <p className="text-2xl font-extrabold mb-1" style={{ color: ACCENT }}>
-                {stat.value}
-              </p>
-              <p className="text-sm font-semibold text-gray-700 mb-1">{stat.label}</p>
-              <p className="text-xs text-gray-500 leading-snug">{stat.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 참여자 만족도 */}
-      <section>
-        <h3 className="text-lg font-bold text-gray-800 mb-1">참여자 만족도</h3>
-        <p className="text-sm text-gray-500 mb-5">
-          학생·교사·학부모 모두에게 높은 만족도를 기록하며 프로그램의 우수성을 입증하였습니다.
-        </p>
-        <div className="space-y-4">
-          {satisfactions.map((item) => (
-            <div key={item.label}>
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-sm font-semibold text-gray-700">{item.label}</span>
-                <span className="text-sm font-bold" style={{ color: ACCENT }}>{item.value}%</span>
-              </div>
-              <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
-                <div
-                  className="h-full rounded-full transition-all"
-                  style={{ width: `${item.value}%`, background: `linear-gradient(to right, #A03A1A, ${ACCENT})` }}
-                />
-              </div>
-              <p className="text-xs text-gray-400 mt-1">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* SW미래채움이 만드는 변화 */}
-      <section>
-        <h3 className="text-lg font-bold text-gray-800 mb-4">SW미래채움이 만드는 변화</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {impacts.map((item) => {
-            const Icon = item.icon;
-            return (
-              <div key={item.title} className="rounded-xl p-5 border border-gray-200 bg-white">
-                <div
-                  className="w-9 h-9 rounded-lg flex items-center justify-center text-white mb-3"
-                  style={{ backgroundColor: ACCENT }}
-                >
-                  <Icon size={18} />
-                </div>
-                <p className="font-bold text-gray-800 mb-1">{item.title}</p>
+              1
+            </span>
+            <h4 className="font-bold text-gray-800">SW미래채움 센터 구축</h4>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 ml-8">
+            {centerItems.map((item) => (
+              <div
+                key={item.label}
+                className="rounded-xl border border-gray-200 p-5 bg-white hover:border-orange-300 transition-colors"
+              >
+                <p className="font-bold mb-1" style={{ color: ACCENT }}>{item.label}</p>
                 <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
               </div>
-            );
-          })}
+            ))}
+          </div>
+        </div>
+
+        {/* 2. SW전문강사 양성 */}
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-3">
+            <span
+              className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
+              style={{ backgroundColor: ACCENT }}
+            >
+              2
+            </span>
+            <h4 className="font-bold text-gray-800">SW전문강사 양성</h4>
+          </div>
+          <div className="ml-8 space-y-3">
+            {instructorItems.map((item) => (
+              <div key={item} className="flex gap-3 rounded-xl border border-gray-200 p-4 bg-white">
+                <div
+                  className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-white"
+                  style={{ backgroundColor: ACCENT }}
+                >
+                  <GraduationCap size={16} />
+                </div>
+                <p className="text-sm text-gray-700 leading-relaxed self-center">{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* 3. 초·중등학생 대상 SW 교육 운영 */}
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <span
+              className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
+              style={{ backgroundColor: ACCENT }}
+            >
+              3
+            </span>
+            <h4 className="font-bold text-gray-800">초·중등학생 대상 SW 교육 운영</h4>
+          </div>
+          <div className="ml-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="rounded-xl border border-gray-200 p-5 bg-white">
+              <div className="flex items-center gap-2 mb-3">
+                <div
+                  className="w-8 h-8 rounded-lg flex items-center justify-center text-white"
+                  style={{ backgroundColor: ACCENT }}
+                >
+                  <Monitor size={16} />
+                </div>
+                <p className="font-bold text-gray-800 text-sm">센터 교육</p>
+              </div>
+              <ul className="space-y-2">
+                {centerEdu.map((text) => (
+                  <li key={text} className="flex gap-2 text-sm text-gray-600 leading-relaxed">
+                    <span className="mt-1.5 shrink-0 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: ACCENT }} />
+                    {text}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-xl border border-gray-200 p-5 bg-white">
+              <div className="flex items-center gap-2 mb-3">
+                <div
+                  className="w-8 h-8 rounded-lg flex items-center justify-center text-white"
+                  style={{ backgroundColor: ACCENT }}
+                >
+                  <MapPin size={16} />
+                </div>
+                <p className="font-bold text-gray-800 text-sm">찾아가는 교육</p>
+              </div>
+              <ul className="space-y-2">
+                {visitEdu.map((text) => (
+                  <li key={text} className="flex gap-2 text-sm text-gray-600 leading-relaxed">
+                    <span className="mt-1.5 shrink-0 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: ACCENT }} />
+                    {text}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* 최신 보도 */}
+      {/* 주요 성과 */}
       <section>
-        <h3 className="text-lg font-bold text-gray-800 mb-4">최신 보도</h3>
-        <div className="space-y-4">
-          {news.map((item) => (
-            <div key={item.title} className="rounded-xl border border-gray-200 p-5 hover:border-orange-300 transition-colors">
-              <div className="flex items-center gap-2 mb-2">
-                <span
-                  className="text-xs font-semibold px-2 py-0.5 rounded-full text-white"
-                  style={{ backgroundColor: ACCENT }}
-                >
-                  보도자료
-                </span>
-                <span className="text-xs text-gray-400">{item.source} · {item.date}</span>
+        <h3 className="text-lg font-bold text-gray-800 mb-1">SW미래채움 주요 성과</h3>
+        <p className="text-sm text-gray-500 mb-6">2019년 출범 이후 매년 지역과 참여 규모를 확대하며 성장하고 있습니다.</p>
+
+        {/* 누적 요약 통계 */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {cumulativeStats.map((stat) => {
+            const Icon = stat.icon;
+            return (
+              <div
+                key={stat.label}
+                className="rounded-xl p-5 text-center border border-orange-100 bg-orange-50/50"
+              >
+                <div className="flex justify-center mb-2">
+                  <Icon size={20} style={{ color: ACCENT }} />
+                </div>
+                <p className="text-xl font-extrabold mb-0.5" style={{ color: ACCENT }}>{stat.value}</p>
+                <p className="text-xs font-semibold text-gray-700 mb-0.5">{stat.label}</p>
+                <p className="text-xs text-gray-400">{stat.sub}</p>
               </div>
-              <p className="font-bold text-gray-800 text-sm mb-1 leading-snug">{item.title}</p>
-              <p className="text-xs text-gray-500 leading-relaxed">{item.summary}</p>
-              <div className="flex items-center gap-1 mt-3 text-xs font-semibold" style={{ color: ACCENT }}>
-                자세히 보기 <ArrowRight size={12} />
+            );
+          })}
+        </div>
+
+        {/* 주요 추진사항 요약 */}
+        <div className="mb-8">
+          <h4 className="text-sm font-bold text-gray-700 mb-3">주요 추진사항</h4>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {keyInitiatives.map((ki) => {
+              const Icon = ki.icon;
+              return (
+                <div key={ki.title} className="rounded-xl border border-gray-200 bg-white p-5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-white shrink-0"
+                      style={{ backgroundColor: ACCENT }}
+                    >
+                      <Icon size={16} />
+                    </div>
+                    <p className="font-bold text-gray-800 text-sm">{ki.title}</p>
+                  </div>
+                  <p className="text-xs text-gray-500 leading-relaxed mb-3">{ki.summary}</p>
+                  {ki.itemType === 'tag' ? (
+                    <div className="flex flex-wrap gap-1">
+                      {ki.items.map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-xs px-2 py-0.5 rounded-full border font-medium"
+                          style={{ borderColor: ACCENT, color: ACCENT }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  ) : (
+                    <ul className="space-y-1">
+                      {ki.items.map((text) => (
+                        <li key={text} className="flex gap-2 text-xs text-gray-600">
+                          <span className="mt-1.5 shrink-0 w-1 h-1 rounded-full bg-orange-300" />
+                          {text}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* 연도별 타임라인 */}
+        <div className="space-y-4">
+          {yearlyData.map((item, idx) => (
+            <div key={item.year} className="relative">
+              {/* 연결선 */}
+              {idx < yearlyData.length - 1 && (
+                <div
+                  className="absolute left-[19px] top-[52px] w-0.5 h-[calc(100%+1rem)] bg-orange-100"
+                  style={{ zIndex: 0 }}
+                />
+              )}
+              <div className="flex gap-4">
+                {/* 연도 뱃지 */}
+                <div className="shrink-0 flex flex-col items-center" style={{ zIndex: 1 }}>
+                  <div
+                    className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-bold"
+                    style={{ backgroundColor: ACCENT }}
+                  >
+                    {item.year.slice(2)}
+                  </div>
+                </div>
+
+                {/* 카드 */}
+                <div className="flex-1 rounded-xl border border-gray-200 bg-white p-5 mb-4">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-base font-extrabold text-gray-900">{item.year}년</span>
+                    <span
+                      className="text-xs font-semibold px-2.5 py-0.5 rounded-full text-white"
+                      style={{ backgroundColor: ACCENT }}
+                    >
+                      {item.newRegions}
+                    </span>
+                  </div>
+
+                  {/* 지역 */}
+                  <p className="text-xs text-gray-500 mb-4 leading-relaxed">
+                    운영 지역: {item.regionLabel}
+                  </p>
+
+                  {/* 수치 3개 */}
+                  <div className="grid grid-cols-3 gap-3 mb-4">
+                    <div className="rounded-lg bg-orange-50 p-3 text-center">
+                      <p className="text-sm font-extrabold" style={{ color: ACCENT }}>{item.instructors}</p>
+                      <p className="text-xs text-gray-500 mt-0.5">강사 양성</p>
+                    </div>
+                    <div className="rounded-lg bg-orange-50 p-3 text-center">
+                      <p className="text-sm font-extrabold" style={{ color: ACCENT }}>{item.students}</p>
+                      <p className="text-xs text-gray-500 mt-0.5">학생 교육</p>
+                    </div>
+                    <div className="rounded-lg bg-orange-50 p-3 text-center">
+                      <p className="text-sm font-extrabold" style={{ color: ACCENT }}>{item.visitStudents}</p>
+                      <p className="text-xs text-gray-500 mt-0.5">찾아가는 교육 ({item.visitRate})</p>
+                    </div>
+                  </div>
+
+                  {/* 주요 추진사항 */}
+                  <div>
+                    <p className="text-xs font-semibold text-gray-500 mb-2">주요 추진사항</p>
+                    <ul className="space-y-1">
+                      {item.initiatives.map((init) => (
+                        <li key={init} className="flex gap-2 text-xs text-gray-600">
+                          <span className="mt-1.5 shrink-0 w-1 h-1 rounded-full bg-orange-300" />
+                          {init}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
