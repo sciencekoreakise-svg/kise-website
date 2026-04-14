@@ -1,5 +1,8 @@
 'use client';
 
+import { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
+
 type EventType = 'highlight' | 'award';
 
 interface HistoryEvent {
@@ -190,158 +193,238 @@ const data: YearEntry[] = [
   ]},
 ];
 
-export default function HistoryTimeline() {
-  const sorted = [...data].reverse();
+// 이벤트 행 컴포넌트
+function EventRow({ month, text, type }: HistoryEvent) {
+  const isHighlight = type === 'highlight';
+  const isAward = type === 'award';
+  const monthBg = isHighlight ? '#003087' : isAward ? '#FF6600' : '#eef3ff';
+  const monthColor = isHighlight || isAward ? 'white' : '#0066CC';
+  const textColor = isHighlight ? '#003087' : isAward ? '#c45200' : '#374151';
+  const textWeight: React.CSSProperties['fontWeight'] = isHighlight ? 600 : 400;
 
   return (
-    <div style={{ maxWidth: 900, paddingBottom: '5rem' }}>
-      {sorted.map(({ year, events }, groupIdx) => (
-        <div
-          key={year}
-          className="year-group"
-          style={{ display: 'flex', gap: 0, marginBottom: 0, position: 'relative' }}
-          onMouseEnter={(e) => {
-            const badge = e.currentTarget.querySelector<HTMLElement>('.year-badge');
-            const dot = e.currentTarget.querySelector<HTMLElement>('.line-dot');
-            if (badge) { badge.style.background = '#FF6600'; badge.style.transform = 'scale(1.05)'; }
-            if (dot) { dot.style.background = '#FF6600'; dot.style.borderColor = '#FF6600'; dot.style.transform = 'scale(1.3)'; }
-          }}
-          onMouseLeave={(e) => {
-            const badge = e.currentTarget.querySelector<HTMLElement>('.year-badge');
-            const dot = e.currentTarget.querySelector<HTMLElement>('.line-dot');
-            if (badge) { badge.style.background = '#003087'; badge.style.transform = ''; }
-            if (dot) { dot.style.background = 'white'; dot.style.borderColor = '#003087'; dot.style.transform = ''; }
-          }}
-        >
-          {/* 연도 컬럼 */}
-          <div style={{ width: 110, flexShrink: 0, paddingTop: '1.6rem' }}>
-            <div
-              className="year-badge"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 88,
-                height: 36,
-                background: '#003087',
-                color: 'white',
-                fontSize: '0.9rem',
-                fontWeight: 700,
-                borderRadius: 8,
-                letterSpacing: '0.05em',
-                position: 'relative',
-                zIndex: 2,
-                transition: 'background 0.2s, transform 0.2s',
-              }}
-            >
-              {year}
+    <div className="flex items-start gap-2 py-2 px-2 rounded-lg border-l-2 border-transparent">
+      <span
+        className="shrink-0 text-xs font-bold rounded px-1.5 py-0.5 min-w-[40px] text-center"
+        style={{ background: monthBg, color: monthColor }}
+      >
+        {month}월
+      </span>
+      <span className="text-sm leading-relaxed" style={{ color: textColor, fontWeight: textWeight }}>
+        {text}
+      </span>
+    </div>
+  );
+}
+
+export default function HistoryTimeline() {
+  const sorted = [...data].reverse();
+  // 최근 3개 연도는 기본 펼침
+  const recentYears = new Set(sorted.slice(0, 3).map((d) => d.year));
+  const [openYears, setOpenYears] = useState<Set<number>>(recentYears);
+
+  const toggle = (year: number) => {
+    setOpenYears((prev) => {
+      const next = new Set(prev);
+      next.has(year) ? next.delete(year) : next.add(year);
+      return next;
+    });
+  };
+
+  return (
+    <>
+      {/* ── 모바일: 아코디언 레이아웃 ── */}
+      <div className="md:hidden space-y-1">
+        {sorted.map(({ year, events }) => {
+          const isOpen = openYears.has(year);
+          const highlightCount = events.filter((e) => e.type === 'highlight' || e.type === 'award').length;
+
+          return (
+            <div key={year} className="border border-gray-200 rounded-xl overflow-hidden">
+              {/* 연도 헤더 (탭) */}
+              <button
+                onClick={() => toggle(year)}
+                className="w-full flex items-center justify-between px-4 py-3 text-left"
+                style={{ backgroundColor: isOpen ? '#003087' : '#f8fafc' }}
+              >
+                <div className="flex items-center gap-3">
+                  <span
+                    className="text-base font-bold"
+                    style={{ color: isOpen ? 'white' : '#003087' }}
+                  >
+                    {year}
+                  </span>
+                  {/* 주요 이벤트 미리보기 도트 */}
+                  {!isOpen && highlightCount > 0 && (
+                    <span className="flex gap-1">
+                      {Array.from({ length: Math.min(highlightCount, 3) }).map((_, i) => (
+                        <span key={i} className="w-1.5 h-1.5 rounded-full bg-orange-400 inline-block" />
+                      ))}
+                    </span>
+                  )}
+                  {!isOpen && (
+                    <span className="text-xs text-gray-400">{events.length}개 항목</span>
+                  )}
+                </div>
+                <ChevronDown
+                  size={16}
+                  className="shrink-0 transition-transform duration-200"
+                  style={{
+                    color: isOpen ? 'white' : '#003087',
+                    transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                  }}
+                />
+              </button>
+
+              {/* 이벤트 목록 */}
+              {isOpen && (
+                <div className="divide-y divide-gray-50 px-2 py-1">
+                  {events.map((ev, i) => (
+                    <EventRow key={i} {...ev} />
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* ── 데스크탑: 기존 타임라인 ── */}
+      <div className="hidden md:block" style={{ maxWidth: 900, paddingBottom: '5rem' }}>
+        {sorted.map(({ year, events }, groupIdx) => (
+          <div
+            key={year}
+            className="year-group"
+            style={{ display: 'flex', gap: 0, marginBottom: 0, position: 'relative' }}
+            onMouseEnter={(e) => {
+              const badge = e.currentTarget.querySelector<HTMLElement>('.year-badge');
+              const dot = e.currentTarget.querySelector<HTMLElement>('.line-dot');
+              if (badge) { badge.style.background = '#FF6600'; badge.style.transform = 'scale(1.05)'; }
+              if (dot) { dot.style.background = '#FF6600'; dot.style.borderColor = '#FF6600'; dot.style.transform = 'scale(1.3)'; }
+            }}
+            onMouseLeave={(e) => {
+              const badge = e.currentTarget.querySelector<HTMLElement>('.year-badge');
+              const dot = e.currentTarget.querySelector<HTMLElement>('.line-dot');
+              if (badge) { badge.style.background = '#003087'; badge.style.transform = ''; }
+              if (dot) { dot.style.background = 'white'; dot.style.borderColor = '#003087'; dot.style.transform = ''; }
+            }}
+          >
+            {/* 연도 컬럼 */}
+            <div style={{ width: 110, flexShrink: 0, paddingTop: '1.6rem' }}>
+              <div
+                className="year-badge"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 88,
+                  height: 36,
+                  background: '#003087',
+                  color: 'white',
+                  fontSize: '0.9rem',
+                  fontWeight: 700,
+                  borderRadius: 8,
+                  letterSpacing: '0.05em',
+                  position: 'relative',
+                  zIndex: 2,
+                  transition: 'background 0.2s, transform 0.2s',
+                }}
+              >
+                {year}
+              </div>
+            </div>
+
+            {/* 세로선 컬럼 */}
+            <div style={{ width: 32, flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '1.6rem' }}>
+              <div
+                className="line-dot"
+                style={{
+                  width: 14, height: 14,
+                  borderRadius: '50%',
+                  background: 'white',
+                  border: '3px solid #003087',
+                  flexShrink: 0,
+                  marginTop: 11,
+                  zIndex: 2,
+                  transition: 'background 0.2s, border-color 0.2s, transform 0.2s',
+                }}
+              />
+              {groupIdx < sorted.length - 1 && (
+                <div style={{ width: 2, flex: 1, background: '#d1dae8', marginTop: 4, minHeight: 20 }} />
+              )}
+            </div>
+
+            {/* 이벤트 컬럼 */}
+            <div style={{ flex: 1, padding: '1.4rem 0 0.5rem 1.2rem' }}>
+              {events.map(({ month, text, type }, i) => {
+                const isHighlight = type === 'highlight';
+                const isAward = type === 'award';
+                const monthBg = isHighlight ? '#003087' : isAward ? '#FF6600' : '#eef3ff';
+                const monthColor = isHighlight || isAward ? 'white' : '#0066CC';
+                const textColor = isHighlight ? '#003087' : isAward ? '#c45200' : '#374151';
+                const textWeight: React.CSSProperties['fontWeight'] = isHighlight ? 600 : 400;
+
+                return (
+                  <div
+                    key={i}
+                    style={{
+                      display: 'flex', alignItems: 'flex-start', gap: '0.8rem',
+                      padding: '0.55rem 1rem', borderRadius: 8, marginBottom: '0.3rem',
+                      cursor: 'default',
+                      transition: 'background 0.2s, transform 0.2s, border-left-color 0.2s, box-shadow 0.2s',
+                      borderLeft: '3px solid transparent',
+                    }}
+                    onMouseEnter={(e) => {
+                      const el = e.currentTarget;
+                      el.style.background = 'white';
+                      el.style.borderLeftColor = '#003087';
+                      el.style.transform = 'translateX(4px)';
+                      el.style.boxShadow = '0 2px 12px rgba(0,48,135,0.08)';
+                      const mEl = el.querySelector<HTMLElement>('.ev-month');
+                      const tEl = el.querySelector<HTMLElement>('.ev-text');
+                      if (mEl) { mEl.style.background = '#003087'; mEl.style.color = 'white'; }
+                      if (tEl) { tEl.style.color = '#003087'; tEl.style.fontWeight = '500'; }
+                    }}
+                    onMouseLeave={(e) => {
+                      const el = e.currentTarget;
+                      el.style.background = '';
+                      el.style.borderLeftColor = 'transparent';
+                      el.style.transform = '';
+                      el.style.boxShadow = '';
+                      const mEl = el.querySelector<HTMLElement>('.ev-month');
+                      const tEl = el.querySelector<HTMLElement>('.ev-text');
+                      if (mEl) { mEl.style.background = monthBg; mEl.style.color = monthColor; }
+                      if (tEl) { tEl.style.color = textColor; tEl.style.fontWeight = String(textWeight); }
+                    }}
+                  >
+                    <span
+                      className="ev-month"
+                      style={{
+                        fontSize: '0.72rem', fontWeight: 700, color: monthColor,
+                        background: monthBg, padding: '0.2rem 0.5rem', borderRadius: 4,
+                        flexShrink: 0, minWidth: 46, textAlign: 'center',
+                        transition: 'background 0.2s, color 0.2s',
+                      }}
+                    >
+                      {month}월
+                    </span>
+                    <span
+                      className="ev-text"
+                      style={{
+                        fontSize: '0.9rem', color: textColor,
+                        lineHeight: 1.5, fontWeight: textWeight,
+                        transition: 'color 0.2s',
+                      }}
+                    >
+                      {text}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
-
-          {/* 세로선 컬럼 */}
-          <div style={{ width: 32, flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '1.6rem' }}>
-            <div
-              className="line-dot"
-              style={{
-                width: 14,
-                height: 14,
-                borderRadius: '50%',
-                background: 'white',
-                border: '3px solid #003087',
-                flexShrink: 0,
-                marginTop: 11,
-                zIndex: 2,
-                transition: 'background 0.2s, border-color 0.2s, transform 0.2s',
-              }}
-            />
-            {groupIdx < sorted.length - 1 && (
-              <div style={{ width: 2, flex: 1, background: '#d1dae8', marginTop: 4, minHeight: 20 }} />
-            )}
-          </div>
-
-          {/* 이벤트 컬럼 */}
-          <div style={{ flex: 1, padding: '1.4rem 0 0.5rem 1.2rem' }}>
-            {events.map(({ month, text, type }, i) => {
-              const isHighlight = type === 'highlight';
-              const isAward = type === 'award';
-
-              const monthBg = isHighlight ? '#003087' : isAward ? '#FF6600' : '#eef3ff';
-              const monthColor = isHighlight || isAward ? 'white' : '#0066CC';
-              const textColor = isHighlight ? '#003087' : isAward ? '#c45200' : '#374151';
-              const textWeight: React.CSSProperties['fontWeight'] = isHighlight ? 600 : 400;
-
-              return (
-                <div
-                  key={i}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '0.8rem',
-                    padding: '0.55rem 1rem',
-                    borderRadius: 8,
-                    marginBottom: '0.3rem',
-                    cursor: 'default',
-                    transition: 'background 0.2s, transform 0.2s, border-left-color 0.2s, box-shadow 0.2s',
-                    borderLeft: '3px solid transparent',
-                  }}
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget;
-                    el.style.background = 'white';
-                    el.style.borderLeftColor = '#003087';
-                    el.style.transform = 'translateX(4px)';
-                    el.style.boxShadow = '0 2px 12px rgba(0,48,135,0.08)';
-                    const mEl = el.querySelector<HTMLElement>('.ev-month');
-                    const tEl = el.querySelector<HTMLElement>('.ev-text');
-                    if (mEl) { mEl.style.background = '#003087'; mEl.style.color = 'white'; }
-                    if (tEl) { tEl.style.color = '#003087'; tEl.style.fontWeight = '500'; }
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget;
-                    el.style.background = '';
-                    el.style.borderLeftColor = 'transparent';
-                    el.style.transform = '';
-                    el.style.boxShadow = '';
-                    const mEl = el.querySelector<HTMLElement>('.ev-month');
-                    const tEl = el.querySelector<HTMLElement>('.ev-text');
-                    if (mEl) { mEl.style.background = monthBg; mEl.style.color = monthColor; }
-                    if (tEl) { tEl.style.color = textColor; tEl.style.fontWeight = String(textWeight); }
-                  }}
-                >
-                  <span
-                    className="ev-month"
-                    style={{
-                      fontSize: '0.72rem',
-                      fontWeight: 700,
-                      color: monthColor,
-                      background: monthBg,
-                      padding: '0.2rem 0.5rem',
-                      borderRadius: 4,
-                      flexShrink: 0,
-                      minWidth: 46,
-                      textAlign: 'center',
-                      transition: 'background 0.2s, color 0.2s',
-                    }}
-                  >
-                    {month}월
-                  </span>
-                  <span
-                    className="ev-text"
-                    style={{
-                      fontSize: '0.9rem',
-                      color: textColor,
-                      lineHeight: 1.5,
-                      fontWeight: textWeight,
-                      transition: 'color 0.2s',
-                    }}
-                  >
-                    {text}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </>
   );
 }
