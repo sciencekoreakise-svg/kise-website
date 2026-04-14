@@ -29,7 +29,6 @@ export const metadata: Metadata = {
     url: 'https://kise-website.vercel.app',
     locale: 'ko_KR',
     siteName: '한국정보과학진흥협회',
-    title: '사단법인 한국정보과학진흥협회 (KISE)',
     description: '디지털 포용 사회 실현을 위한 한국정보과학진흥협회 공식 홈페이지',
     images: [
       {
@@ -42,7 +41,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '사단법인 한국정보과학진흥협회 (KISE)',
     description: '디지털 포용 사회 실현을 위한 한국정보과학진흥협회 공식 홈페이지',
     images: ['https://kise-website.vercel.app/kise-kakao.png'],
   },
