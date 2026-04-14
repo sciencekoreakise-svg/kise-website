@@ -253,17 +253,24 @@ export default function OrganizationPage() {
             flex-direction: column;
             align-items: center;
           }
-          /* dept-fork 너비를 dept-group(530px)에 맞춤 */
           .dept-fork {
             width: 530px;
             display: flex;
             flex-direction: column;
           }
-          .dept-fork-hline { width: 100%; height: 2px; background: #99aac0; }
+          /* hline: 각 열 중심(75px ~ 455px) 구간만 */
+          .dept-fork-hline {
+            width: 380px;
+            margin: 0 auto;
+            height: 2px;
+            background: #99aac0;
+          }
+          /* vlines: 380px 컨테이너를 가운데 정렬 후 space-between → 0 / 190 / 380px = 절대 75 / 265 / 455px */
           .dept-fork-vlines {
             display: flex;
-            justify-content: space-around;
-            width: 100%;
+            justify-content: space-between;
+            width: 380px;
+            margin: 0 auto;
           }
           .dept-fork-vlines .line-v { width: 2px; height: 20px; background: #99aac0; margin: 0; }
           .dept-group { display: flex; justify-content: center; gap: 40px; width: 100%; }
