@@ -86,7 +86,7 @@ export default function OrganizationPage() {
           <div className="px-4 py-3">
             <div className="text-sm font-bold text-gray-800 mb-2">과학기술정보통신인증원</div>
             <div className="space-y-1 pl-3 border-l-2 mb-3" style={{ borderColor: '#FF6600' }}>
-              {['인증원장', '인증관리단', '인증관리팀', '인증운영팀', '자격검정팀'].map((t) => (
+              {['인증관리단', '인증관리팀', '인증운영팀', '자격검정팀'].map((t) => (
                 <div key={t} className="text-sm text-gray-700">{t}</div>
               ))}
             </div>
@@ -324,8 +324,6 @@ export default function OrganizationPage() {
                   <div className="annex-box" style={{ borderColor: '#FF6600' }}>
                     <div className="annex-label" style={{ color: '#FF6600', borderColor: '#FF6600' }}>부설기구</div>
                     <div className="box orange" style={{ fontSize: '0.8rem', width: '100%' }}>과학기술정보통신인증원</div>
-                    <div className="line-v" style={{ height: 10 }} />
-                    <div className="box orange-line" style={{ width: 120 }}>인증원장</div>
                     <div className="line-v" style={{ height: 10 }} />
                     <div className="box orange-line" style={{ width: 120 }}>인증관리단</div>
                     <div className="team-list">
