@@ -69,7 +69,7 @@ export default function HeroSlider() {
               backgroundClip: 'text',
             }}
           >
-            모두를 위한 따뜻한 SW·AI
+            모두를 위한 SW·AI
           </span>
         </h1>
 

@@ -88,7 +88,7 @@ export default function PageBanner({ title, breadcrumb }: Props) {
             animation: 'pb-fadeUp 0.8s 0.3s ease both',
           }}
         >
-          사람중심 가치, 모두를 위한 따뜻한 SW·AI
+          사람중심 가치, 모두를 위한 SW·AI
         </p>
 
 
