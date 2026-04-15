@@ -36,6 +36,14 @@ export default function Footer() {
             과학경진대회 접수시스템 <ExternalLink size={12} />
           </a>
           <a
+            href="https://ceo.kise.or.kr"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 text-white/80 hover:text-white transition-colors"
+          >
+            KISE CEO 포럼 <ExternalLink size={12} />
+          </a>
+          <a
             href="https://www.msit.go.kr/index.do"
             target="_blank"
             rel="noopener noreferrer"
