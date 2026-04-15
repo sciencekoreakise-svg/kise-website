@@ -79,20 +79,6 @@ export default function OrganizationPage() {
         </div>
 
         {/* 부설기구 */}
-        <div className="rounded-xl border-2 overflow-hidden" style={{ borderColor: '#FF6600' }}>
-          <div className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-white" style={{ backgroundColor: '#FF6600' }}>
-            부설기구
-          </div>
-          <div className="px-4 py-3">
-            <div className="text-sm font-bold text-gray-800 mb-2">과학기술정보통신인증원</div>
-            <div className="space-y-1 pl-3 border-l-2 mb-3" style={{ borderColor: '#FF6600' }}>
-              {['인증관리단', '인증관리팀', '인증운영팀', '자격검정팀'].map((t) => (
-                <div key={t} className="text-sm text-gray-700">{t}</div>
-              ))}
-            </div>
-          </div>
-        </div>
-
         <div className="rounded-xl border-2 overflow-hidden" style={{ borderColor: '#00bfa5' }}>
           <div className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-white" style={{ backgroundColor: '#00bfa5' }}>
             부설기구
@@ -101,6 +87,20 @@ export default function OrganizationPage() {
             <div className="text-sm font-bold text-gray-800 mb-2">융합교육센터</div>
             <div className="space-y-1 pl-3 border-l-2" style={{ borderColor: '#00bfa5' }}>
               {['자문교수단', '교육연구개발팀'].map((t) => (
+                <div key={t} className="text-sm text-gray-700">{t}</div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-xl border-2 overflow-hidden" style={{ borderColor: '#FF6600' }}>
+          <div className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-white" style={{ backgroundColor: '#FF6600' }}>
+            부설기구
+          </div>
+          <div className="px-4 py-3">
+            <div className="text-sm font-bold text-gray-800 mb-2">과학기술정보통신인증원</div>
+            <div className="space-y-1 pl-3 border-l-2 mb-3" style={{ borderColor: '#FF6600' }}>
+              {['인증관리단', '인증관리팀', '인증운영팀', '자격검정팀'].map((t) => (
                 <div key={t} className="text-sm text-gray-700">{t}</div>
               ))}
             </div>
