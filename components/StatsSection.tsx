@@ -64,7 +64,7 @@ function StatCard({ stat, started }: { stat: typeof stats[0]; started: boolean }
 
   return (
     <div
-      className="group relative bg-white rounded-2xl p-6 md:p-8 text-center shadow-sm hover:shadow-lg transition-all hover:-translate-y-1 border border-gray-100 overflow-hidden"
+      className="group relative bg-white rounded-2xl p-4 sm:p-6 md:p-8 text-center shadow-sm hover:shadow-lg transition-all hover:-translate-y-1 border border-gray-100 overflow-hidden"
     >
       {/* 배경 글로우 */}
       <div
@@ -74,7 +74,7 @@ function StatCard({ stat, started }: { stat: typeof stats[0]; started: boolean }
 
       {/* 아이콘 */}
       <div
-        className="w-14 h-14 rounded-full flex items-center justify-center text-2xl mx-auto mb-4"
+        className="w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center text-xl sm:text-2xl mx-auto mb-3 sm:mb-4"
         style={{ background: `${stat.color}15` }}
       >
         {stat.icon}
@@ -82,15 +82,15 @@ function StatCard({ stat, started }: { stat: typeof stats[0]; started: boolean }
 
       {/* 숫자 */}
       <div
-        className="text-3xl md:text-4xl font-black mb-1 tabular-nums"
+        className="text-2xl sm:text-3xl md:text-4xl font-black mb-1 tabular-nums"
         style={{ color: stat.color }}
       >
         {display}
-        <span className="text-xl md:text-2xl font-bold">{stat.suffix}</span>
+        <span className="text-lg sm:text-xl md:text-2xl font-bold">{stat.suffix}</span>
       </div>
 
       {/* 라벨 */}
-      <div className="text-base font-bold text-gray-900 mb-2">{stat.label}</div>
+      <div className="text-sm sm:text-base font-bold text-gray-900 mb-1 sm:mb-2">{stat.label}</div>
 
       {/* 설명 */}
       <div className="text-xs text-gray-400 leading-relaxed">{stat.desc}</div>
@@ -132,7 +132,7 @@ export default function StatsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {stats.map((stat) => (
             <StatCard key={stat.label} stat={stat} started={started} />
           ))}
