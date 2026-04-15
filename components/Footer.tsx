@@ -28,7 +28,7 @@ export default function Footer() {
             자격검정사업단 <ExternalLink size={12} />
           </a>
           <a
-            href="https://www.kise.or.kr/index/index_sgq.php"
+            href="https://kiseor.cafe24.com/index/index_sgq.php"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1 text-white/80 hover:text-white transition-colors"
@@ -63,7 +63,7 @@ export default function Footer() {
             </div>
             <p className="text-sm text-white/60 leading-relaxed">
               디지털 포용 사회 실현을 위해 디지털디바이드 해소, SW교육, 과학문화 확산 등
-              다양한 공익사업을 수행하는 비영리 사단법인입니다.
+              다양한 공익사업을 수행하는 비영리 공익법인입니다.
             </p>
           </div>
 

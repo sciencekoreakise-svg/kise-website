@@ -39,7 +39,7 @@ export default function Header() {
       <div style={{ backgroundColor: '#003087' }} className="hidden sm:block text-white text-xs">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-end gap-4 h-9">
           <a
-            href="https://www.kise.or.kr/index/index_sgq.php"
+            href="https://kiseor.cafe24.com/index/index_sgq.php"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1 opacity-80 hover:opacity-100 transition-opacity"

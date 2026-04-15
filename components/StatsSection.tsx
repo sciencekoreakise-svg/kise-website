@@ -20,7 +20,7 @@ const stats = [
     icon: '🏆',
   },
   {
-    value: 350,
+    value: 400,
     suffix: '개+',
     label: '기업 네트워크',
     desc: '산학연 협력 파트너 기업 및 기관',
