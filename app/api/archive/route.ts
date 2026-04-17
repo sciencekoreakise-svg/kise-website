@@ -43,35 +43,40 @@ export async function POST(request: NextRequest) {
     return Response.json({ error: '인증 실패' }, { status: 401 });
   }
 
-  const formData = await request.formData();
-  const title = formData.get('title') as string;
-  const content = formData.get('content') as string;
-  const category = (formData.get('category') as string) || '자료';
-  const file = formData.get('file') as File | null;
+  try {
+    const formData = await request.formData();
+    const title = formData.get('title') as string;
+    const content = formData.get('content') as string;
+    const category = (formData.get('category') as string) || '자료';
+    const file = formData.get('file') as File | null;
 
-  let fileName: string | null = null;
-  let fileSize: string | null = null;
-  let fileUrl: string | null = null;
+    let fileName: string | null = null;
+    let fileSize: string | null = null;
+    let fileUrl: string | null = null;
 
-  if (file && file.size > 0) {
-    const saved = await saveFile(file);
-    fileName = saved.fileName;
-    fileSize = saved.fileSize;
-    fileUrl = saved.fileUrl;
+    if (file && file.size > 0) {
+      const saved = await saveFile(file);
+      fileName = saved.fileName;
+      fileSize = saved.fileSize;
+      fileUrl = saved.fileUrl;
+    }
+
+    const items = await readData<ArchiveItem>('archive.json');
+    const newItem: ArchiveItem = {
+      id: nextId(items),
+      title,
+      content,
+      category,
+      date: new Date().toISOString().split('T')[0],
+      fileName,
+      fileSize,
+      fileUrl,
+    };
+    items.unshift(newItem);
+    await writeData('archive.json', items);
+    return Response.json(newItem, { status: 201 });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return Response.json({ error: message }, { status: 500 });
   }
-
-  const items = await readData<ArchiveItem>('archive.json');
-  const newItem: ArchiveItem = {
-    id: nextId(items),
-    title,
-    content,
-    category,
-    date: new Date().toISOString().split('T')[0],
-    fileName,
-    fileSize,
-    fileUrl,
-  };
-  items.unshift(newItem);
-  await writeData('archive.json', items);
-  return Response.json(newItem, { status: 201 });
 }

@@ -42,36 +42,41 @@ export async function POST(request: NextRequest) {
     return Response.json({ error: '인증 실패' }, { status: 401 });
   }
 
-  const contentType = request.headers.get('content-type') || '';
-  let title = '', content = '', media = '';
-  let imageUrl: string | null = null;
+  try {
+    const contentType = request.headers.get('content-type') || '';
+    let title = '', content = '', media = '';
+    let imageUrl: string | null = null;
 
-  if (contentType.includes('multipart/form-data')) {
-    const formData = await request.formData();
-    title = formData.get('title') as string;
-    content = formData.get('content') as string;
-    media = (formData.get('media') as string) || '';
-    const image = formData.get('image') as File | null;
-    if (image && image.size > 0) {
-      imageUrl = await saveImage(image);
+    if (contentType.includes('multipart/form-data')) {
+      const formData = await request.formData();
+      title = formData.get('title') as string;
+      content = formData.get('content') as string;
+      media = (formData.get('media') as string) || '';
+      const image = formData.get('image') as File | null;
+      if (image && image.size > 0) {
+        imageUrl = await saveImage(image);
+      }
+    } else {
+      const body = await request.json();
+      title = body.title;
+      content = body.content;
+      media = body.media || '';
     }
-  } else {
-    const body = await request.json();
-    title = body.title;
-    content = body.content;
-    media = body.media || '';
-  }
 
-  const items = await readData<PressItem>('press.json');
-  const newItem: PressItem = {
-    id: nextId(items),
-    title,
-    content,
-    media,
-    date: new Date().toISOString().split('T')[0],
-    imageUrl,
-  };
-  items.unshift(newItem);
-  await writeData('press.json', items);
-  return Response.json(newItem, { status: 201 });
+    const items = await readData<PressItem>('press.json');
+    const newItem: PressItem = {
+      id: nextId(items),
+      title,
+      content,
+      media,
+      date: new Date().toISOString().split('T')[0],
+      imageUrl,
+    };
+    items.unshift(newItem);
+    await writeData('press.json', items);
+    return Response.json(newItem, { status: 201 });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return Response.json({ error: message }, { status: 500 });
+  }
 }

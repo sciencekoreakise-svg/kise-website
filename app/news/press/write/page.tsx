@@ -83,8 +83,12 @@ function PressWriteForm() {
     });
 
     setSubmitting(false);
-    if (r.ok) router.push('/news/press');
-    else alert('비밀번호가 틀렸거나 오류가 발생했습니다.');
+    if (r.ok) {
+      router.push('/news/press');
+    } else {
+      const data = await r.json().catch(() => ({}));
+      alert(`오류 (${r.status}): ${data.error || '알 수 없는 오류'}`);
+    }
   }
 
   const displayImage = preview || (removeImage ? null : existingImage);

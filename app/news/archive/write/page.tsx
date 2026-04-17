@@ -61,8 +61,12 @@ function ArchiveWriteForm() {
     });
 
     setSubmitting(false);
-    if (r.ok) router.push('/news/archive');
-    else alert('비밀번호가 틀렸거나 오류가 발생했습니다.');
+    if (r.ok) {
+      router.push('/news/archive');
+    } else {
+      const data = await r.json().catch(() => ({}));
+      alert(`오류 (${r.status}): ${data.error || '알 수 없는 오류'}`);
+    }
   }
 
   return (
