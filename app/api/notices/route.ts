@@ -11,7 +11,7 @@ export interface Notice {
 }
 
 export async function GET() {
-  const notices = readData<Notice>('notices.json');
+  const notices = await readData<Notice>('notices.json');
   return Response.json(notices);
 }
 
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     return Response.json({ error: '인증 실패' }, { status: 401 });
   }
   const body = await request.json();
-  const notices = readData<Notice>('notices.json');
+  const notices = await readData<Notice>('notices.json');
   const newNotice: Notice = {
     id: nextId(notices),
     title: body.title,
@@ -30,6 +30,6 @@ export async function POST(request: NextRequest) {
     date: new Date().toISOString().split('T')[0],
   };
   notices.unshift(newNotice);
-  writeData('notices.json', notices);
+  await writeData('notices.json', notices);
   return Response.json(newNotice, { status: 201 });
 }

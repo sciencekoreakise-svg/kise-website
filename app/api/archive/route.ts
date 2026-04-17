@@ -14,8 +14,28 @@ export interface ArchiveItem {
   fileUrl: string | null;
 }
 
+const USE_BLOB = !!(process.env.BLOB_READ_WRITE_TOKEN);
+
+async function saveFile(file: File): Promise<{ fileName: string; fileSize: string; fileUrl: string }> {
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+  const uniqueName = `${Date.now()}_${file.name}`;
+
+  if (USE_BLOB) {
+    const { put } = await import('@vercel/blob');
+    const blob = await put(`uploads/${uniqueName}`, buffer, { access: 'public' });
+    return { fileName: file.name, fileSize: formatFileSize(file.size), fileUrl: blob.url };
+  }
+
+  // 로컬 파일시스템 fallback
+  const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+  if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+  fs.writeFileSync(path.join(uploadsDir, uniqueName), buffer);
+  return { fileName: file.name, fileSize: formatFileSize(file.size), fileUrl: `/uploads/${uniqueName}` };
+}
+
 export async function GET() {
-  const items = readData<ArchiveItem>('archive.json');
+  const items = await readData<ArchiveItem>('archive.json');
   return Response.json(items);
 }
 
@@ -35,20 +55,13 @@ export async function POST(request: NextRequest) {
   let fileUrl: string | null = null;
 
   if (file && file.size > 0) {
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    const uniqueName = `${Date.now()}_${file.name}`;
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
-    }
-    fs.writeFileSync(path.join(uploadsDir, uniqueName), buffer);
-    fileName = file.name;
-    fileSize = formatFileSize(file.size);
-    fileUrl = `/uploads/${uniqueName}`;
+    const saved = await saveFile(file);
+    fileName = saved.fileName;
+    fileSize = saved.fileSize;
+    fileUrl = saved.fileUrl;
   }
 
-  const items = readData<ArchiveItem>('archive.json');
+  const items = await readData<ArchiveItem>('archive.json');
   const newItem: ArchiveItem = {
     id: nextId(items),
     title,
@@ -60,6 +73,6 @@ export async function POST(request: NextRequest) {
     fileUrl,
   };
   items.unshift(newItem);
-  writeData('archive.json', items);
+  await writeData('archive.json', items);
   return Response.json(newItem, { status: 201 });
 }

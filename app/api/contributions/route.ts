@@ -10,7 +10,7 @@ export interface ContributionItem {
 }
 
 export async function GET() {
-  const items = readData<ContributionItem>('contributions.json');
+  const items = await readData<ContributionItem>('contributions.json');
   return Response.json(items);
 }
 
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     return Response.json({ error: '제목과 링크는 필수입니다.' }, { status: 400 });
   }
 
-  const items = readData<ContributionItem>('contributions.json');
+  const items = await readData<ContributionItem>('contributions.json');
   const newItem: ContributionItem = {
     id: nextId(items),
     title,
@@ -35,6 +35,6 @@ export async function POST(request: NextRequest) {
     url,
   };
   items.unshift(newItem);
-  writeData('contributions.json', items);
+  await writeData('contributions.json', items);
   return Response.json(newItem, { status: 201 });
 }
