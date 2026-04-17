@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server';
 import { readData, writeData, nextId, checkAdmin, formatFileSize } from '@/lib/db';
+import { put } from '@vercel/blob';
 import fs from 'fs';
 import path from 'path';
 
@@ -22,12 +23,10 @@ async function saveFile(file: File): Promise<{ fileName: string; fileSize: strin
   const uniqueName = `${Date.now()}_${file.name}`;
 
   if (USE_BLOB) {
-    const { put } = await import('@vercel/blob');
     const blob = await put(`uploads/${uniqueName}`, buffer, { access: 'public' });
     return { fileName: file.name, fileSize: formatFileSize(file.size), fileUrl: blob.url };
   }
 
-  // 로컬 파일시스템 fallback
   const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
   if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
   fs.writeFileSync(path.join(uploadsDir, uniqueName), buffer);

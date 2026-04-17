@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 import { readData, writeData, checkAdmin, formatFileSize } from '@/lib/db';
 import type { ArchiveItem } from '../route';
+import { put } from '@vercel/blob';
 import fs from 'fs';
 import path from 'path';
 
@@ -12,7 +13,6 @@ async function saveFile(file: File): Promise<{ fileName: string; fileSize: strin
   const uniqueName = `${Date.now()}_${file.name}`;
 
   if (USE_BLOB) {
-    const { put } = await import('@vercel/blob');
     const blob = await put(`uploads/${uniqueName}`, buffer, { access: 'public' });
     return { fileName: file.name, fileSize: formatFileSize(file.size), fileUrl: blob.url };
   }

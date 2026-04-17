@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server';
 import { readData, writeData, nextId, checkAdmin } from '@/lib/db';
+import { put } from '@vercel/blob';
 import fs from 'fs';
 import path from 'path';
 
@@ -21,7 +22,6 @@ async function saveImage(image: File): Promise<string> {
   const uniqueName = `${dateStr}_${image.name}`;
 
   if (USE_BLOB) {
-    const { put } = await import('@vercel/blob');
     const blob = await put(`press/${uniqueName}`, buffer, { access: 'public' });
     return blob.url;
   }
