@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 import { readData, writeData, checkAdmin } from '@/lib/db';
-import type { Notice } from '../route';
+import type { Notice, Attachment } from '../route';
+import { saveFile } from '../route';
 
 export async function GET(
   _request: NextRequest,
@@ -19,11 +20,44 @@ export async function PUT(
 ) {
   if (!checkAdmin(request)) return Response.json({ error: '인증 실패' }, { status: 401 });
   const { id } = await params;
-  const body = await request.json();
   const notices = await readData<Notice>('notices.json');
   const idx = notices.findIndex((n) => n.id === Number(id));
   if (idx === -1) return Response.json({ error: '없음' }, { status: 404 });
-  notices[idx] = { ...notices[idx], ...body, id: notices[idx].id };
+
+  const contentType = request.headers.get('content-type') || '';
+
+  if (contentType.includes('multipart/form-data')) {
+    const formData = await request.formData();
+    const title = (formData.get('title') as string) || notices[idx].title;
+    const content = (formData.get('content') as string) || notices[idx].content;
+    const category = (formData.get('category') as string) || notices[idx].category;
+    const isPinned = formData.has('isPinned') ? formData.get('isPinned') === 'true' : notices[idx].isPinned;
+
+    const keepRaw = formData.get('keepAttachments') as string | null;
+    const keepAttachments: Attachment[] = keepRaw ? JSON.parse(keepRaw) : (notices[idx].attachments ?? []);
+
+    const files = formData.getAll('files') as File[];
+    const newAttachments: Attachment[] = [];
+    for (const file of files) {
+      if (file && file.size > 0) {
+        newAttachments.push(await saveFile(file));
+      }
+    }
+
+    const attachments = [...keepAttachments, ...newAttachments];
+    notices[idx] = {
+      ...notices[idx],
+      title,
+      content,
+      category,
+      isPinned,
+      attachments: attachments.length > 0 ? attachments : undefined,
+    };
+  } else {
+    const body = await request.json();
+    notices[idx] = { ...notices[idx], ...body, id: notices[idx].id };
+  }
+
   await writeData('notices.json', notices);
   return Response.json(notices[idx]);
 }

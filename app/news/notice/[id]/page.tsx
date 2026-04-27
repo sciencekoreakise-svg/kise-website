@@ -2,7 +2,13 @@
 
 import { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Calendar, ArrowLeft, Pencil, Trash2, Pin } from 'lucide-react';
+import { Calendar, ArrowLeft, Pencil, Trash2, Pin, Paperclip } from 'lucide-react';
+
+interface Attachment {
+  fileName: string;
+  fileSize: string;
+  fileUrl: string;
+}
 
 interface Notice {
   id: number;
@@ -11,6 +17,7 @@ interface Notice {
   category: string;
   isPinned: boolean;
   date: string;
+  attachments?: Attachment[];
 }
 
 const categoryColors: Record<string, string> = {
@@ -102,6 +109,28 @@ export default function NoticeDetailPage({ params }: { params: Promise<{ id: str
         <div className="px-6 py-6 min-h-40 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
           {notice.content}
         </div>
+
+        {/* 첨부파일 */}
+        {notice.attachments && notice.attachments.length > 0 && (
+          <div className="px-6 py-4 border-t border-gray-100 bg-gray-50">
+            <p className="text-xs font-semibold text-gray-500 mb-2">첨부파일</p>
+            <ul className="space-y-1.5">
+              {notice.attachments.map((att, i) => (
+                <li key={i}>
+                  <a
+                    href={att.fileUrl}
+                    download={att.fileName}
+                    className="flex items-center gap-2 text-sm text-[#003087] hover:underline"
+                  >
+                    <Paperclip size={13} className="shrink-0 text-gray-400" />
+                    <span className="truncate">{att.fileName}</span>
+                    <span className="text-xs text-gray-400 shrink-0">({att.fileSize})</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </article>
   );

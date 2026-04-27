@@ -1,11 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Paperclip, X } from 'lucide-react';
 import { Suspense } from 'react';
 
 const CATEGORIES = ['공지', '모집공고', '선정결과', '결과발표', '결과보고', '안내'];
+
+interface Attachment {
+  fileName: string;
+  fileSize: string;
+  fileUrl: string;
+}
 
 function NoticeWriteForm() {
   const router = useRouter();
@@ -19,7 +25,10 @@ function NoticeWriteForm() {
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('공지');
   const [isPinned, setIsPinned] = useState(false);
+  const [existingAttachments, setExistingAttachments] = useState<Attachment[]>([]);
+  const [newFiles, setNewFiles] = useState<File[]>([]);
   const [submitting, setSubmitting] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (isEdit && authed) {
@@ -30,16 +39,28 @@ function NoticeWriteForm() {
           setContent(data.content);
           setCategory(data.category);
           setIsPinned(data.isPinned);
+          setExistingAttachments(data.attachments ?? []);
         });
     }
   }, [isEdit, editId, authed]);
 
   function handleAuth(e: React.FormEvent) {
     e.preventDefault();
-    fetch('/api/notices', { headers: { 'x-admin-password': password } }).then((r) => {
-      // 실제 인증은 서버에서 하므로 POST 시 검증됨. 간단히 비번 저장 후 진행
-      setAuthed(true);
-    });
+    setAuthed(true);
+  }
+
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const selected = Array.from(e.target.files ?? []);
+    setNewFiles((prev) => [...prev, ...selected]);
+    e.target.value = '';
+  }
+
+  function removeExisting(index: number) {
+    setExistingAttachments((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  function removeNew(index: number) {
+    setNewFiles((prev) => prev.filter((_, i) => i !== index));
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -47,14 +68,27 @@ function NoticeWriteForm() {
     if (!title.trim() || !content.trim()) return alert('제목과 내용을 입력하세요.');
     setSubmitting(true);
 
-    const body = { title, content, category, isPinned };
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append('category', category);
+    formData.append('isPinned', String(isPinned));
+
+    if (isEdit) {
+      formData.append('keepAttachments', JSON.stringify(existingAttachments));
+    }
+
+    for (const file of newFiles) {
+      formData.append('files', file);
+    }
+
     const url = isEdit ? `/api/notices/${editId}` : '/api/notices';
     const method = isEdit ? 'PUT' : 'POST';
 
     const r = await fetch(url, {
       method,
-      headers: { 'Content-Type': 'application/json', 'x-admin-password': password },
-      body: JSON.stringify(body),
+      headers: { 'x-admin-password': password },
+      body: formData,
     });
 
     setSubmitting(false);
@@ -148,6 +182,59 @@ function NoticeWriteForm() {
               rows={12}
               className="w-full border border-gray-300 rounded px-3 py-2 text-sm outline-none focus:border-[#003087] resize-y"
             />
+          </div>
+
+          {/* 첨부파일 */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">첨부파일</label>
+
+            {/* 기존 첨부파일 (수정 시) */}
+            {existingAttachments.length > 0 && (
+              <ul className="mb-2 space-y-1">
+                {existingAttachments.map((att, i) => (
+                  <li key={i} className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 rounded px-3 py-1.5">
+                    <Paperclip size={13} className="text-gray-400 shrink-0" />
+                    <span className="flex-1 truncate">{att.fileName}</span>
+                    <span className="text-gray-400 text-xs shrink-0">{att.fileSize}</span>
+                    <button type="button" onClick={() => removeExisting(i)} className="text-gray-300 hover:text-red-500 transition-colors">
+                      <X size={14} />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {/* 새로 추가할 파일 */}
+            {newFiles.length > 0 && (
+              <ul className="mb-2 space-y-1">
+                {newFiles.map((file, i) => (
+                  <li key={i} className="flex items-center gap-2 text-sm text-gray-600 bg-blue-50 rounded px-3 py-1.5">
+                    <Paperclip size={13} className="text-blue-400 shrink-0" />
+                    <span className="flex-1 truncate">{file.name}</span>
+                    <span className="text-gray-400 text-xs shrink-0">{(file.size / 1024).toFixed(1)} KB</span>
+                    <button type="button" onClick={() => removeNew(i)} className="text-gray-300 hover:text-red-500 transition-colors">
+                      <X size={14} />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              multiple
+              onChange={handleFileChange}
+              className="hidden"
+            />
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="flex items-center gap-1.5 px-3 py-2 border border-dashed border-gray-300 rounded text-sm text-gray-500 hover:border-[#003087] hover:text-[#003087] transition-colors"
+            >
+              <Paperclip size={14} />
+              파일 첨부
+            </button>
           </div>
 
           <div className="flex items-center justify-end gap-3">

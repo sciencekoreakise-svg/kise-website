@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Calendar, Pin, Plus, Trash2 } from 'lucide-react';
+import { Calendar, Pin, Plus, Trash2, Paperclip } from 'lucide-react';
 
 interface Notice {
   id: number;
@@ -11,6 +11,7 @@ interface Notice {
   category: string;
   isPinned: boolean;
   date: string;
+  attachments?: { fileName: string; fileSize: string; fileUrl: string }[];
 }
 
 const categoryColors: Record<string, string> = {
@@ -108,6 +109,9 @@ export default function NoticePage() {
                   <span className="text-sm text-gray-800 hover:text-[#003087]">
                     {notice.title}
                   </span>
+                  {notice.attachments && notice.attachments.length > 0 && (
+                    <Paperclip size={12} className="text-gray-400 shrink-0" />
+                  )}
                 </span>
                 <span className="col-span-2 flex items-center justify-center gap-1 text-xs text-gray-400">
                   <Calendar size={12} />
