@@ -2,6 +2,7 @@ import HeroSlider from '@/components/HeroSlider';
 import NoticeBoard from '@/components/NoticeBoard';
 import RelatedLinks from '@/components/RelatedLinks';
 import StatsSection from '@/components/StatsSection';
+import AwardPopup from '@/components/AwardPopup';
 import Link from 'next/link';
 import { ArrowRight, Users, Laptop, FlaskConical, Trophy } from 'lucide-react';
 
@@ -47,6 +48,8 @@ const businesses = [
 export default function HomePage() {
   return (
     <>
+      <AwardPopup />
+
       {/* 히어로 슬라이더 */}
       <HeroSlider />
 
