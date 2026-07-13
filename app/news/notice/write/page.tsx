@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeft, Paperclip, X } from 'lucide-react';
 import { Suspense } from 'react';
+import ContentTextarea from '@/components/ContentTextarea';
 
 const CATEGORIES = ['공지', '모집공고', '선정결과', '결과발표', '결과보고', '안내'];
 
@@ -173,16 +174,7 @@ function NoticeWriteForm() {
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">내용</label>
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              placeholder="내용을 입력하세요"
-              rows={12}
-              className="w-full border border-gray-300 rounded px-3 py-2 text-sm outline-none focus:border-[#003087] resize-y"
-            />
-          </div>
+          <ContentTextarea value={content} onChange={setContent} rows={12} placeholder="내용을 입력하세요" />
 
           {/* 첨부파일 */}
           <div>

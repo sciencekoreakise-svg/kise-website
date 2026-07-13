@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeft, ImagePlus, X } from 'lucide-react';
+import ContentTextarea from '@/components/ContentTextarea';
 
 function PressWriteForm() {
   const router = useRouter();
@@ -152,16 +153,7 @@ function PressWriteForm() {
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">내용</label>
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              placeholder="내용을 입력하세요"
-              rows={10}
-              className="w-full border border-gray-300 rounded px-3 py-2 text-sm outline-none focus:border-[#003087] resize-y"
-            />
-          </div>
+          <ContentTextarea value={content} onChange={setContent} rows={10} placeholder="내용을 입력하세요" />
 
           {/* 이미지 첨부 */}
           <div>

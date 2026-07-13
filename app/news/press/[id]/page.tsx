@@ -3,6 +3,7 @@
 import { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Calendar, ArrowLeft, Pencil, Trash2 } from 'lucide-react';
+import { renderContentWithLinks } from '@/lib/renderContent';
 
 interface PressItem {
   id: number;
@@ -96,7 +97,7 @@ export default function PressDetailPage({ params }: { params: Promise<{ id: stri
         )}
 
         <div className="px-6 py-6 min-h-40 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
-          {item.content}
+          {renderContentWithLinks(item.content)}
         </div>
       </div>
     </article>
