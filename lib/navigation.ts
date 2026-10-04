@@ -43,6 +43,12 @@ export const navItems: NavItem[] = [
     external: true,
   },
   {
+    id: 'center',
+    label: '융합교육센터',
+    href: 'https://center.kise.or.kr',
+    external: true,
+  },
+  {
     id: 'qual',
     label: '자격검정사업단',
     href: 'http://cad.or.kr',

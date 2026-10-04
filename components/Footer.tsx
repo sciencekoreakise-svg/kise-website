@@ -20,6 +20,14 @@ export default function Footer() {
             과학기술정보통신인증원 <ExternalLink size={12} />
           </a>
           <a
+            href="https://center.kise.or.kr"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 text-white/80 hover:text-white transition-colors"
+          >
+            융합교육센터 <ExternalLink size={12} />
+          </a>
+          <a
             href="http://cad.or.kr"
             target="_blank"
             rel="noopener noreferrer"
